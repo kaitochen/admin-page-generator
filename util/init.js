@@ -132,7 +132,6 @@ export class GenerateNavigate {
       this.setHttpNavigate(this._http);
     }
   }
-  _set;
   _rewriteNavigate(type, cb) {
     switch (type) {
       case "page":
