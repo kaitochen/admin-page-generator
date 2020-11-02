@@ -1,0 +1,27 @@
+$--color-primary: #3377FF;
+._config-pg-form{
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+._config-pg-form-item{
+  .el-form-item{
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  .el-form-item__label{
+    height: 30px;
+    line-height: 30px;
+  }
+}
+._config-pg-title{
+  font-size: 14px;
+  color: #666;
+  border-left: 5px solid $--color-primary;
+  padding: 0 12px;
+  box-sizing: border-box;
+  margin: 0;
+}
+.flex-full{
+  width: 100% !important;
+}
