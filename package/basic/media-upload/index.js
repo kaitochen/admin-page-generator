@@ -8,7 +8,7 @@ export default {
     required: false,
     disabled: false,
     placeholder: "",
-    defaultValue: "",
+    defaultValue: [],
     limit: 10,
     multiple: false,
     sizeLimit: 50,

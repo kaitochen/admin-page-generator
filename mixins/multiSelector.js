@@ -19,28 +19,32 @@ export default {
         Object.keys(newValue).length > 0 &&
         this.element.config.dynamic
       ) {
-        this.curlCommand(this.element.config.dynamicUrl);
+        this.curlCommand(this.element.config.dynamicUrl, this.curlCallback);
       }
     }
   },
   methods: {
-    curlCommand(command) {
+    curlCallback(params) {
+      if (params.type === "request" || params.type === "http") {
+        executeProtocol
+          .call(this, params)
+          .then(res => {
+            if (res && res.code === 200) {
+              console.log(res);
+              this.options = res.data;
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
+    curlCommand(command, cb) {
       try {
         let params = protocolConverter(
           protocolMatchData(command, this.data, this.context)
         );
-        if (params.type === "request" || params.type === "http") {
-          executeProtocol
-            .call(this, params)
-            .then(res => {
-              if (res && res.code === 200) {
-                this.options = res.data;
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        }
+        cb(params);
       } catch (e) {
         console.log("catch error", e);
       }

@@ -27,6 +27,22 @@
         <el-radio v-model="element.config.multiple" :label="true">是</el-radio>
         <el-radio v-model="element.config.multiple" :label="false">否</el-radio>
       </el-form-item>
+      <el-form-item label="文件类型">
+        <el-select
+          v-model="element.config.typeLimit"
+          placeholder=""
+          class="flex-full"
+          :multiple="true"
+        >
+          <el-option
+            v-for="item in element.config.typeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="限制数量">
         <el-input-number
           size="small"
@@ -36,7 +52,7 @@
           :max="50"
         ></el-input-number>
       </el-form-item>
-      <el-form-item label="大小数量">
+      <el-form-item label="大小数量(MB)">
         <el-input-number
           size="small"
           style="width: 100%"
@@ -58,14 +74,7 @@ export default {
     }
   },
   data() {
-    return {
-      patternOption: [
-        { value: "ch", label: "中文" },
-        { value: "eng", label: "英文" },
-        { value: "num", label: "数字" },
-        { value: "symbol", label: "字符" }
-      ]
-    };
+    return {};
   }
 };
 </script>

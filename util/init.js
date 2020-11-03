@@ -141,10 +141,10 @@ export class GenerateNavigate {
         this.routeNavigate = cb;
         break;
       case "request":
-        this.routeNavigate = cb;
+        this.requestNavigate = cb;
         break;
       case "http":
-        this.routeNavigate = cb;
+        this.httpNavigate = cb;
         break;
     }
   }

@@ -1,6 +1,6 @@
 const getConfig = () => {
   const path = require("path");
-  const files = require.context("../pg-components", true, /\.js$/);
+  const files = require.context("../package", true, /\.js$/);
   const modules = {};
   files.keys().forEach(key => {
     const dirname = path.dirname(key);
@@ -16,7 +16,7 @@ const getConfig = () => {
 };
 const getComponent = () => {
   const path = require("path");
-  const files = require.context("../pg-components", true, /config\.vue$/);
+  const files = require.context("../package", true, /config\.vue$/);
   const modules = {};
   files.keys().forEach(key => {
     const dirname = path.dirname(key);
@@ -29,7 +29,7 @@ const getComponent = () => {
 };
 const getDragComponents = () => {
   const path = require("path");
-  const files = require.context("../pg-components", true, /drag\.vue$/);
+  const files = require.context("../package", true, /drag\.vue$/);
   const modules = {};
   files.keys().forEach(key => {
     const dirname = path.dirname(key);
@@ -42,7 +42,7 @@ const getDragComponents = () => {
 };
 const getGenerateComponents = () => {
   const path = require("path");
-  const files = require.context("../pg-components", true, /index\.vue$/);
+  const files = require.context("../package", true, /index\.vue$/);
   const modules = {};
   files.keys().forEach(key => {
     const dirname = path.dirname(key);
