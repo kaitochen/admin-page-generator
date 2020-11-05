@@ -161,3 +161,56 @@ export class GenerateNavigate {
     this._rewriteNavigate("http", cb);
   }
 }
+
+export class GeneratorUpload {
+  constructor() {
+    this._aliUpload = file => {
+      return new Promise(resolve => {
+        resolve(file);
+      });
+    };
+    this._txUpload = file => {
+      return new Promise(resolve => {
+        resolve(file);
+      });
+    };
+    this._qiniuUpload = file => {
+      return new Promise(resolve => {
+        resolve(file);
+      });
+    };
+    this._serverUpload = file => {
+      return new Promise(resolve => {
+        resolve(file);
+      });
+    };
+  }
+  setUploadFn(type, cb) {
+    switch (type) {
+      case "ali":
+        this._aliUpload = cb;
+        break;
+      case "tx":
+        this._txUpload = cb;
+        break;
+      case "qiniu":
+        this._qiniuUpload = cb;
+        break;
+      case "server":
+        this._serverUpload = cb;
+        break;
+    }
+  }
+  aliUpload(file) {
+    return this._aliUpload(file);
+  }
+  txUpload(file) {
+    return this._txUpload(file);
+  }
+  qiniuUpload(file) {
+    return this._qiniuUpload(file);
+  }
+  serverUpload(file) {
+    return this._serverUpload(file);
+  }
+}

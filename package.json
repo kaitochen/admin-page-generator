@@ -13,6 +13,7 @@
     "admin-page-generator"
   ],
   "dependencies": {
+    "ali-oss": "^6.11.2",
     "curl-to-params": "^0.1.1",
     "vuedraggable": "^2.24.1"
   },

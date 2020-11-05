@@ -8,6 +8,7 @@
     :multiple="element.config.multiple"
     :remote="element.config.remote"
     :remote-method="remoteFn"
+    clearable
   >
     <el-option
       v-for="item in options"

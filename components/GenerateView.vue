@@ -16,8 +16,8 @@
         v-else
         :label="element.config.label"
         :title="element.config.label"
-        :required="element.config.required"
         :prop="element.config.prop"
+        :rules="getRule(element)"
       >
         <component
           :key="element.key"
@@ -32,6 +32,7 @@
   </div>
 </template>
 <script>
+import { validateEl } from "../util/validate";
 export default {
   name: "pg-view",
   components: {},
@@ -76,7 +77,20 @@ export default {
       }
     }
   },
-  methods: {},
+  methods: {
+    getRule(el) {
+      const vali = el.config.required
+        ? {
+            validator: validateEl(el),
+            trigger: "change",
+            required: true
+          }
+        : {
+          required: false
+        };
+      return vali;
+    }
+  },
   mounted() {
     this.generateData = this.data;
   }

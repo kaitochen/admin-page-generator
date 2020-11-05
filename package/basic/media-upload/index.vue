@@ -1,11 +1,27 @@
 <template>
   <span>
-    <ul class="file-list">
-      <li class="file-item" v-for="(file, index) in value" :key="index">
-        <p :title="file.name">{{ file.name }}</p>
-        <span class="close el-icon-error" @click="deleteAlready(index)"></span>
-      </li>
-    </ul>
+    <draggable
+      class="_dragContainer"
+      v-model="value"
+      v-bind="{
+        group: 'media',
+        ghostClass: 'ghost',
+        animation: 200,
+        handle: '.drag-media'
+      }"
+    >
+      <transition-group name="fade" tag="div" class="file-list">
+        <template v-for="(file, index) in value">
+          <div class="file-item drag-media" :key="index">
+            <p :title="file.name">{{ file.name }}</p>
+            <span
+              class="close el-icon-error"
+              @click="deleteAlready(index)"
+            ></span>
+          </div>
+        </template>
+      </transition-group>
+    </draggable>
     <div class="file-upload" v-show="value.length < element.config.limit">
       <el-button
         type="primary"
@@ -37,6 +53,8 @@
   </span>
 </template>
 <script>
+import Draggable from "vuedraggable";
+
 import comp from "../../../mixins/comp";
 import multiSelector from "../../../mixins/multiSelector";
 import FileUploadDialog from "../../../components/FileUploadDialog";
@@ -44,7 +62,8 @@ import { filterMedia } from "../../../util/transform.js";
 export default {
   name: "pg-media-upload",
   components: {
-    FileUploadDialog
+    FileUploadDialog,
+    Draggable
   },
   mixins: [comp, multiSelector],
   props: {},
@@ -104,10 +123,7 @@ export default {
     this.$refs.file.addEventListener("change", e => {
       let files = e.target.files;
       if (files) {
-        let { res, error } = filterMedia(
-          files,
-          this.element.config.sizeLimit
-        );
+        let { res, error } = filterMedia(files, this.element.config.sizeLimit);
         if (error.length > 0) {
           this.$message.error(
             "以下文件不符合文件格式或者超出了最大文件大小(" +

@@ -122,3 +122,32 @@ export const filterMedia = (files, maxSize) => {
     error: error
   };
 };
+
+export const filterImage = (files, maxSize) => {
+  const maxByte = maxSize * 1024 * 1024;
+  if (files.length <= 0) {
+    return {
+      res: [],
+      error: []
+    };
+  }
+
+  let typeArr = ["jpg", "png", "jpeg"];
+  let result = [];
+  let error = [];
+  files.forEach(file => {
+    let type = file.name.split(".");
+    type = type[type.length - 1];
+    type = type.toLowerCase();
+    console.log(file, maxSize);
+    if (typeArr.indexOf(type) > -1 && file.size < maxByte) {
+      result.push(file);
+    } else {
+      error.push(file.name);
+    }
+  });
+  return {
+    res: result,
+    error: error
+  };
+};

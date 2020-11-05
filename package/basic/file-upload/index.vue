@@ -1,11 +1,27 @@
 <template>
   <span>
-    <ul class="file-list">
-      <li class="file-item" v-for="(file, index) in value" :key="index">
-        <p :title="file.name">{{ file.name }}</p>
-        <span class="close el-icon-error" @click="deleteAlready(index)"></span>
-      </li>
-    </ul>
+    <draggable
+      class="_dragContainer"
+      v-model="value"
+      v-bind="{
+        group: 'file',
+        ghostClass: 'ghost',
+        animation: 200,
+        handle: '.drag-file'
+      }"
+    >
+      <transition-group name="fade" tag="div" class="file-list">
+        <template v-for="(file, index) in value">
+          <div class="file-item drag-file" :key="index">
+            <p :title="file.name">{{ file.name }}</p>
+            <span
+              class="close el-icon-error"
+              @click="deleteAlready(index)"
+            ></span>
+          </div>
+        </template>
+      </transition-group>
+    </draggable>
     <div class="file-upload" v-show="value.length < element.config.limit">
       <el-button
         type="primary"
@@ -37,6 +53,7 @@
   </span>
 </template>
 <script>
+import Draggable from "vuedraggable";
 import comp from "../../../mixins/comp";
 import multiSelector from "../../../mixins/multiSelector";
 import FileUploadDialog from "../../../components/FileUploadDialog";
@@ -44,7 +61,8 @@ import { uploadAcceptTransform, filterFile } from "../../../util/transform.js";
 export default {
   name: "pg-file-upload",
   components: {
-    FileUploadDialog
+    FileUploadDialog,
+    Draggable
   },
   mixins: [comp, multiSelector],
   props: {},

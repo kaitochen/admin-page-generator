@@ -8,7 +8,8 @@ import {
   isEmptyObject,
   cloneWidget,
   generateKey,
-  GenerateNavigate
+  GenerateNavigate,
+  GeneratorUpload
 } from "./util/init";
 
 import "./theme/default.scss";
@@ -26,6 +27,7 @@ const install = function(Vue, options) {
   Vue.prototype.cloneWidget = cloneWidget;
   Vue.prototype.generateKey = generateKey;
   Vue.prototype.navigator = new GenerateNavigate(options);
+  Vue.prototype.$upload = new GeneratorUpload();
   components.forEach(component => {
     Vue.component(component.name, component);
   });

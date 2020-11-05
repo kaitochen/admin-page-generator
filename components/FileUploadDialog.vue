@@ -7,13 +7,13 @@
     :show-close="false"
   >
     <div class="_dialog-container">
-      <ul class="files-list">
+      <ul class="files-list" v-if="type === 'file'">
         <li
           class="files-item"
           v-for="(item, index) in already"
           :key="'already_' + index"
         >
-          <span class="icon el-icon-circle-check"></span>
+          <span class="icon el-icon-success"></span>
           <p>{{ item.name }}</p>
         </li>
         <li
@@ -24,6 +24,37 @@
           <span class="icon el-icon-upload2"></span>
           <p>{{ item.name }}</p>
           <span class="close el-icon-error" @click="deleteFile(index)"></span>
+        </li>
+      </ul>
+      <ul class="images-list" v-else-if="type === 'image'">
+        <li
+          class="images-item"
+          v-for="(item, index) in already"
+          :key="'already_' + index"
+        >
+          <el-image
+            class="images-item"
+            :src="fileToImage(item)"
+            :preview-src-list="[fileToImage(item)]"
+            fit="cover"
+          ></el-image>
+          <span class="image-icon el-icon-success"></span>
+        </li>
+        <li
+          class="images-item"
+          v-for="(item, index) in ready"
+          :key="'ready_' + index"
+        >
+          <el-image
+            class="images-item"
+            :src="fileToImage(item)"
+            :preview-src-list="[fileToImage(item)]"
+            fit="cover"
+          ></el-image>
+          <span
+            class="image-close el-icon-error"
+            @click="deleteFile(index)"
+          ></span>
         </li>
       </ul>
     </div>
@@ -49,6 +80,10 @@ export default {
     ready: {
       type: Array,
       required: true
+    },
+    type: {
+      type: String,
+      default: "file"
     }
   },
   methods: {
@@ -63,6 +98,9 @@ export default {
     },
     choose() {
       this.$emit("choose");
+    },
+    fileToImage(file) {
+      return window.URL.createObjectURL(file);
     }
   }
 };
@@ -113,8 +151,48 @@ export default {
   width: 32px;
   height: 32px;
   font-size: 20px;
-  color: #37f;
+  color: #28bd28;
   text-align: center;
   line-height: 32px;
+}
+.images-list {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  flex-wrap: wrap;
+}
+.images-item {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.image-icon {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 16px;
+  color: #28bd28;
+  font-size: 16px;
+}
+.image-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 16px;
+  color: #999999;
+  font-size: 16px;
+  cursor: pointer;
 }
 </style>
