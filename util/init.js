@@ -111,7 +111,6 @@ export class GenerateNavigate {
         resolve();
       });
     };
-
     this._page = page;
     this._route = route;
     this._request = request;

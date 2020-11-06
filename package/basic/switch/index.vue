@@ -1,7 +1,7 @@
 <template>
   <el-switch
     v-model="value"
-    :disabled="readOnly || element.config.disabled"
+    :disabled="isReadOnly || element.config.disabled"
     :active-text="element.config.activeText"
     :inactive-text="element.config.inactiveText"
     :active-color="element.config.activeColor"

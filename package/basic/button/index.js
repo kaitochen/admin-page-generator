@@ -13,6 +13,7 @@ export default {
     role: "",
     btnType: "text",
     isCircle: false,
-    plain: false
+    plain: false,
+    valid: false
   }
 };

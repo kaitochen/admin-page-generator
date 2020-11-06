@@ -2,7 +2,7 @@
   <el-time-picker
     class="flex-full"
     v-model="value"
-    :disabled="readOnly || element.config.disabled"
+    :disabled="isReadOnly || element.config.disabled"
     range-separator="-"
     :is-range="element.config.isRange"
     arrow-control

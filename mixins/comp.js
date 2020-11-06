@@ -17,10 +17,16 @@ export default {
       default: ""
     }
   },
+  inject: ["setReadOnly"],
   data() {
     return {
       value: this.element.config.defaultValue
     };
+  },
+  computed: {
+    isReadOnly() {
+      return this.setReadOnly() || false;
+    }
   },
   watch: {
     data(val) {

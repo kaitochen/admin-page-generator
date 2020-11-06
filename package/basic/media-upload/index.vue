@@ -27,7 +27,7 @@
         type="primary"
         size="mini"
         @click="chooseFile"
-        :disabled="readOnly || element.config.disabled"
+        :disabled="isReadOnly || element.config.disabled"
         >选择文件</el-button
       >
       <input

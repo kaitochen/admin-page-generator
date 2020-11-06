@@ -3,7 +3,7 @@
     type="textarea"
     v-model="value"
     :placeholder="element.config.placeholder"
-    :disabled="readOnly || element.config.disabled"
+    :disabled="isReadOnly || element.config.disabled"
     show-word-limit
     :maxlength="element.config.maxLength"
     :minlength="element.config.minLength"

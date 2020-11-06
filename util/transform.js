@@ -2,13 +2,15 @@ import { FORM_COMPONENT } from "../components/componentsConfig";
 export const configToData = config => {
   let data = {};
   let type = config.type;
-  let _form = {};
+  let _data = {};
   switch (type) {
     case "form":
-      formToData(config.columns, _form);
-      data["form"] = _form;
+      formToData(config.columns, _data);
+      data["form"] = _data;
       break;
     case "list":
+      formToData(config.columns, _data);
+      data["list"] = _data;
       break;
   }
   return data;

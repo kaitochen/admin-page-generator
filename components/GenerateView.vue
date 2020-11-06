@@ -37,6 +37,10 @@ export default {
   name: "pg-view",
   components: {},
   props: {
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
     dragData: {
       type: Object,
       required: true
@@ -86,8 +90,8 @@ export default {
             required: true
           }
         : {
-          required: false
-        };
+            required: false
+          };
       return vali;
     }
   },

@@ -2,7 +2,7 @@
   <el-input
     v-model="value"
     :placeholder="element.config.placeholder"
-    :disabled="readOnly || element.config.disabled"
+    :disabled="isReadOnly || element.config.disabled"
     clearable
     :maxlength="element.config.maxLength"
     :minlength="element.config.minLength"

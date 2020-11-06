@@ -3,19 +3,97 @@ export default {
   name: "表单布局",
   icon: "form",
   belong: "normal",
-  columns: [],
+  columns: [
+    {
+      type: "action",
+      belong: "normal",
+      config: {},
+      columns: [
+        {
+          type: "button",
+          belong: "normal",
+          config: {
+            prop: "",
+            label: "返回",
+            icon: "el-icon-back",
+            url: "",
+            btnStyle: "ghost",
+            condition: "",
+            role: "",
+            btnType: "button",
+            isCircle: false,
+            plain: false
+          }
+        },
+        {
+          type: "button",
+          belong: "normal",
+          config: {
+            prop: "",
+            label: "保存",
+            icon: "el-icon-circle-check",
+            url: "",
+            btnStyle: "ghost",
+            condition: "",
+            role: "",
+            btnType: "button",
+            isCircle: false,
+            plain: false
+          }
+        },
+        {
+          type: "button",
+          belong: "normal",
+          config: {
+            prop: "",
+            label: "提交",
+            icon: "el-icon-upload",
+            url: "",
+            btnStyle: "ghost",
+            condition: "",
+            role: "",
+            btnType: "button",
+            isCircle: false,
+            plain: false
+          }
+        },
+        {
+          type: "button",
+          belong: "normal",
+          config: {
+            prop: "",
+            label: "编辑",
+            icon: "el-icon-edit",
+            url: "",
+            btnStyle: "ghost",
+            condition: "",
+            role: "",
+            btnType: "button",
+            isCircle: false,
+            plain: false
+          }
+        },
+        {
+          type: "button",
+          belong: "normal",
+          config: {
+            prop: "",
+            label: "清空",
+            icon: "el-icon-delete",
+            url: "",
+            btnStyle: "ghost",
+            condition: "",
+            role: "",
+            btnType: "button",
+            isCircle: false,
+            plain: false
+          }
+        }
+      ]
+    }
+  ],
   config: {
     prop: "form",
-    editable: true,
-    paddingUrl: "",
-    submitUrl: "",
-    editUrl: "",
-    btn: ["save", "submit", "edit", "clear"],
-    btnOption: [
-      { value: "save", label: "保存" },
-      { value: "submit", label: "提交" },
-      { value: "edit", label: "编辑" },
-      { value: "clear", label: "清空" }
-    ]
+    editable: true
   }
 };

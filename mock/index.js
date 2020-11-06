@@ -4,24 +4,105 @@ export const formConfig = [
     belong: "normal",
     config: {
       editable: true,
-      paddingUrl: "",
-      submitUrl: "",
-      editUrl: "",
-      btn: ["save", "submit", "edit", "clear"],
-      btnOption: [
-        { value: "save", label: "保存" },
-        { value: "submit", label: "提交" },
-        { value: "edit", label: "编辑" },
-        { value: "clear", label: "清空" }
-      ],
-      prop: "form_1603879596188_77002"
+      prop: ""
     },
     columns: [
       {
+        type: "action",
+        belong: "normal",
+        config: { prop: "" },
+        columns: [
+          {
+            type: "button",
+            belong: "normal",
+            config: {
+              prop: "",
+              label: "返回",
+              icon: "el-icon-back",
+              url: "action://back",
+              btnStyle: "ghost",
+              condition: "",
+              role: "",
+              btnType: "button",
+              isCircle: false,
+              plain: false,
+              valid: false
+            }
+          },
+          {
+            type: "button",
+            belong: "normal",
+            config: {
+              prop: "",
+              label: "保存",
+              icon: "el-icon-circle-check",
+              url: "",
+              btnStyle: "ghost",
+              condition: "",
+              role: "",
+              btnType: "button",
+              isCircle: false,
+              plain: false,
+              valid: true
+            }
+          },
+          {
+            type: "button",
+            belong: "normal",
+            config: {
+              prop: "",
+              label: "提交",
+              icon: "el-icon-top",
+              url: "",
+              btnStyle: "ghost",
+              condition: "",
+              role: "",
+              btnType: "button",
+              isCircle: false,
+              plain: false,
+              valid: true
+            }
+          },
+          {
+            type: "button",
+            belong: "normal",
+            config: {
+              prop: "",
+              label: "编辑",
+              icon: "el-icon-edit",
+              url: "",
+              btnStyle: "ghost",
+              condition: "",
+              role: "",
+              btnType: "button",
+              isCircle: false,
+              plain: false,
+              valid: false
+            }
+          },
+          {
+            type: "button",
+            belong: "normal",
+            config: {
+              prop: "",
+              label: "清空",
+              icon: "el-icon-delete",
+              url: "action://clear",
+              btnStyle: "ghost",
+              condition: "",
+              role: "",
+              btnType: "button",
+              isCircle: false,
+              plain: false,
+              valid: false
+            }
+          }
+        ]
+      },
+      {
         type: "header",
         belong: "normal",
-        config: { label: "基础信息", prop: "header_1603879599497_38174" },
-        key: "header_1603879599497_38174"
+        config: { label: "基础信息", prop: "" }
       },
       {
         type: "grid",
@@ -35,7 +116,7 @@ export const formConfig = [
                 type: "input",
                 belong: "",
                 config: {
-                  prop: "input_1603879615960_74973",
+                  prop: "",
                   label: "文本输入框",
                   required: false,
                   disabled: false,
@@ -45,40 +126,25 @@ export const formConfig = [
                   placeholder: "",
                   defaultValue: "",
                   pattern: []
-                },
-                key: "input_1603879615960_74973"
-              },
-              {
-                type: "date-time-picker",
-                belong: "",
-                config: {
-                  prop: "date-time-picker_1603879867368_62039",
-                  label: "日期时间选择器",
-                  required: false,
-                  disabled: false,
-                  defaultValue: "",
-                  isRange: false
-                },
-                key: "date-time-picker_1603879867368_62039"
+                }
               },
               {
                 type: "color-picker",
                 belong: "",
                 config: {
-                  prop: "color-picker_1603879872616_3745",
+                  prop: "",
                   label: "颜色选择器",
                   required: false,
                   disabled: false,
                   defaultValue: "rgb(255,0,0)",
                   isOpacity: false
-                },
-                key: "color-picker_1603879875679_69502"
+                }
               },
               {
                 type: "switch",
                 belong: "",
                 config: {
-                  prop: "switch_1603879906504_43537",
+                  prop: "",
                   label: "开关",
                   required: false,
                   disabled: false,
@@ -87,11 +153,29 @@ export const formConfig = [
                   activeColor: "#04f",
                   inactiveColor: "#f00",
                   defaultValue: true
-                },
-                key: "switch_1603879906504_43537"
+                }
+              },
+              {
+                type: "date-picker",
+                belong: "",
+                config: {
+                  prop: "",
+                  label: "日期选择器",
+                  required: false,
+                  disabled: false,
+                  defaultValue: "",
+                  type: "date",
+                  typeOptions: [
+                    "year",
+                    "month",
+                    "date",
+                    "daterange",
+                    "monthrange"
+                  ],
+                  format: "yyyy-MM-dd"
+                }
               }
-            ],
-            key: "col_1603879607945_85079"
+            ]
           },
           {
             type: "col",
@@ -100,7 +184,7 @@ export const formConfig = [
                 type: "number",
                 belong: "",
                 config: {
-                  prop: "number_1603879618999_49685",
+                  prop: "",
                   label: "数字输入框",
                   required: false,
                   disabled: false,
@@ -111,43 +195,54 @@ export const formConfig = [
                   defaultValue: 1,
                   step: 1,
                   precision: 0
-                },
-                key: "number_1603879618999_49685"
-              },
-              {
-                type: "date-picker",
-                belong: "",
-                config: {
-                  prop: "date-picker_1603879868887_81824",
-                  label: "日期选择器",
-                  required: false,
-                  disabled: false,
-                  defaultValue: "",
-                  isRange: false,
-                  type: "date",
-                  typeOptions: ["date", "month", "year"],
-                  format: "yyyy-MM-dd"
-                },
-                key: "date-picker_1603879870165_59299"
+                }
               },
               {
                 type: "time-picker",
                 belong: "",
                 config: {
-                  prop: "time-picker_1603879880104_51338",
+                  prop: "",
                   label: "时间选择器",
                   required: false,
                   disabled: false,
                   defaultValue: "",
                   isRange: false
-                },
-                key: "time-picker_1603879880104_51338"
+                }
+              },
+              {
+                type: "cascader",
+                belong: "",
+                config: {
+                  prop: "",
+                  label: "级联选择框",
+                  required: false,
+                  disabled: false,
+                  textual: false,
+                  defaultValue: "",
+                  dynamic: true,
+                  multiple: false,
+                  filterable: false,
+                  lazy: false,
+                  checkStrictly: false,
+                  showAllLevels: false,
+                  dynamicUrl: "request://-X post /api/getOptions"
+                }
+              },
+              {
+                type: "date-time-picker",
+                belong: "",
+                config: {
+                  prop: "",
+                  label: "日期时间选择器",
+                  required: false,
+                  disabled: false,
+                  defaultValue: "",
+                  isRange: false
+                }
               }
-            ],
-            key: "col_1603879610789_28736"
+            ]
           }
-        ],
-        key: "grid_1603879607945_24684"
+        ]
       },
       {
         type: "grid",
@@ -161,7 +256,7 @@ export const formConfig = [
                 type: "rate",
                 belong: "",
                 config: {
-                  prop: "rate_1603879896440_10908",
+                  prop: "",
                   label: "评分",
                   required: false,
                   disabled: false,
@@ -169,14 +264,13 @@ export const formConfig = [
                   defaultValue: 0,
                   allowHalf: false,
                   showScore: false
-                },
-                key: "rate_1603879896440_10908"
+                }
               },
               {
                 type: "checkbox",
                 belong: "",
                 config: {
-                  prop: "checkbox_1603879910335_89327",
+                  prop: "",
                   label: "多选框",
                   required: false,
                   disabled: false,
@@ -189,31 +283,13 @@ export const formConfig = [
                     value: "value",
                     label: "label"
                   }
-                },
-                key: "checkbox_1603879910335_89327"
-              },
-              {
-                type: "media-upload",
-                belong: "",
-                config: {
-                  prop: "media-upload_1603879931849_17948",
-                  label: "音视频上传框",
-                  required: false,
-                  disabled: false,
-                  placeholder: "",
-                  defaultValue: [],
-                  limit: 10,
-                  multiple: false,
-                  sizeLimit: 50,
-                  pattern: ""
-                },
-                key: "media-upload_1603879931849_17948"
+                }
               },
               {
                 type: "radio",
                 belong: "",
                 config: {
-                  prop: "radio_1603879912048_26234",
+                  prop: "",
                   label: "单选框",
                   required: false,
                   disabled: false,
@@ -226,20 +302,16 @@ export const formConfig = [
                     value: "value",
                     label: "label"
                   }
-                },
-                key: "radio_1603879912048_26234"
+                }
               }
-            ],
-            key: "col_1603879885496_25578"
+            ]
           }
-        ],
-        key: "grid_1603879885495_66173"
+        ]
       },
       {
         type: "header",
         belong: "normal",
-        config: { label: "详细信息", prop: "header_1603879918591_1973" },
-        key: "header_1603879918591_1973"
+        config: { label: "详细信息", prop: "" }
       },
       {
         type: "grid",
@@ -250,27 +322,10 @@ export const formConfig = [
             type: "col",
             columns: [
               {
-                type: "textarea",
-                belong: "",
-                config: {
-                  prop: "textarea_1603879929602_62821",
-                  label: "文本域输入框",
-                  required: false,
-                  disabled: false,
-                  textual: false,
-                  maxLength: 500,
-                  minLength: 1,
-                  placeholder: "",
-                  defaultValue: "",
-                  pattern: []
-                },
-                key: "textarea_1603879929602_62821"
-              },
-              {
                 type: "file-upload",
                 belong: "",
                 config: {
-                  prop: "file-upload_1603879939129_50541",
+                  prop: "",
                   label: "文件上传框",
                   required: false,
                   disabled: false,
@@ -279,15 +334,22 @@ export const formConfig = [
                   limit: 10,
                   multiple: false,
                   sizeLimit: 50,
-                  pattern: ""
-                },
-                key: "file-upload_1603879939129_50541"
+                  typeLimit: [],
+                  typeOptions: [
+                    { value: "all", label: "不限" },
+                    { value: "word", label: "word文档" },
+                    { value: "excel", label: "excel文件" },
+                    { value: "ppt", label: "ppt文件" },
+                    { value: "pdf", label: "pdf文件" },
+                    { value: "txt", label: "txt文件" }
+                  ]
+                }
               },
               {
                 type: "image-upload",
                 belong: "",
                 config: {
-                  prop: "image-upload_1603879936752_42816",
+                  prop: "",
                   label: "图片上传框",
                   required: false,
                   disabled: false,
@@ -297,16 +359,44 @@ export const formConfig = [
                   multiple: false,
                   sizeLimit: 50,
                   pattern: ""
-                },
-                key: "image-upload_1603879936752_42816"
+                }
+              },
+              {
+                type: "media-upload",
+                belong: "",
+                config: {
+                  prop: "",
+                  label: "音视频上传框",
+                  required: false,
+                  disabled: false,
+                  placeholder: "",
+                  defaultValue: [],
+                  limit: 10,
+                  multiple: false,
+                  sizeLimit: 50,
+                  pattern: ""
+                }
+              },
+              {
+                type: "textarea",
+                belong: "",
+                config: {
+                  prop: "",
+                  label: "文本域输入框",
+                  required: false,
+                  disabled: false,
+                  textual: false,
+                  maxLength: 500,
+                  minLength: 1,
+                  placeholder: "",
+                  defaultValue: "",
+                  pattern: []
+                }
               }
-            ],
-            key: "col_1603879926856_54096"
+            ]
           }
-        ],
-        key: "grid_1603879926856_91832"
+        ]
       }
-    ],
-    key: "form_1603879596188_77002"
+    ]
   }
 ];

@@ -1,6 +1,11 @@
 <template>
   <div class="_action">
-    <generate-view :isHorizontal="true" :dragData="element"></generate-view>
+    <generate-view
+      :isHorizontal="true"
+      :data.sync="generateData"
+      :dragData="element"
+      :context="context"
+    ></generate-view>
   </div>
 </template>
 <script>
@@ -14,12 +19,31 @@ export default {
     element: {
       type: Object,
       required: true
+    },
+    data: {
+      type: Object,
+      required: true
+    },
+    context: {
+      type: String,
+      default: ""
     }
   },
   data() {
     return {
-      data: []
+      generateData: this.data
     };
+  },
+  watch: {
+    data(val) {
+      this.generateData = val;
+    },
+    generateData: {
+      deep: true,
+      handler(val) {
+        this.$emit("update:data", val);
+      }
+    }
   }
 };
 </script>

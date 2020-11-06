@@ -53,6 +53,17 @@ export const protocolConverter = url => {
       };
     }
   }
+  if (url.startsWith("action://")) {
+    url = url.replace("action://", "");
+    url = url.replace(/\\\r|\\\n/g, "");
+    url = url.replace(/\s+/g, " ");
+    return {
+      type: "action",
+      data: {
+        action: url || ""
+      }
+    };
+  }
 };
 export const protocolMatchData = (url, data, context) => {
   const reg = /\{[a-zA-z.]*\}/g;

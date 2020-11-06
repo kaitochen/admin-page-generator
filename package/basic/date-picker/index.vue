@@ -2,7 +2,7 @@
   <el-date-picker
     class="flex-full"
     v-model="value"
-    :disabled="readOnly || element.config.disabled"
+    :disabled="isReadOnly || element.config.disabled"
     range-separator="-"
     :value-format="element.config.format"
     :type="element.config.type"

@@ -6,29 +6,6 @@
     label-position="left"
     class="pg-form"
   >
-    <div class="action">
-      <el-button icon="el-icon-back" @click="forgive">返回</el-button>
-      <el-button
-        icon="el-icon-circle-check"
-        v-if="element.config.btn.indexOf('save') > -1"
-        >保存</el-button
-      >
-      <el-button
-        icon="el-icon-upload2"
-        v-if="element.config.btn.indexOf('submit') > -1"
-        >提交</el-button
-      >
-      <el-button
-        icon="el-icon-edit"
-        v-if="element.config.btn.indexOf('edit') > -1"
-        >编辑</el-button
-      >
-      <el-button
-        icon="el-icon-delete"
-        v-if="element.config.btn.indexOf('clear') > -1"
-        >清空</el-button
-      >
-    </div>
     <generate-view
       :context="context"
       :data.sync="generateData"
@@ -53,6 +30,13 @@ export default {
       required: true
     }
   },
+  provide() {
+    return {
+      setReadOnly: () => {
+        return !this.element.config.editable;
+      }
+    };
+  },
   data() {
     return {
       generateData: this.data,
@@ -74,6 +58,14 @@ export default {
   methods: {
     forgive() {
       this.$emit("forgive");
+    },
+    btnEvent(type) {
+      switch (type) {
+        case "save":
+      }
+      this.$refs.form.validate(valid => {
+        console.log(valid, this.generateData);
+      });
     }
   }
 };

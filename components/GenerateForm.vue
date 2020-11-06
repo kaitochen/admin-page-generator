@@ -106,6 +106,7 @@ import { configs } from "./componentsConfig.js";
 import { formConfig } from "../mock/index.js";
 import { validateConfigLength } from "../util/validate.js";
 import { configToData } from "../util/transform.js";
+import { cloneWidget } from "../util/init.js";
 export default {
   name: "generate-form",
   components: {
@@ -154,7 +155,7 @@ export default {
       console.log(JSON.stringify(root));
     },
     importConfig() {
-      this.dragData.columns = formConfig;
+      this.dragData.columns = cloneWidget(formConfig);
     },
     clear() {
       this.dragData.columns = [];

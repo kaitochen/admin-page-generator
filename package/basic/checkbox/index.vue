@@ -4,7 +4,7 @@
       <el-checkbox
         :key="checkbox.value"
         :label="checkbox.value"
-        :disabled="readOnly || element.config.disabled"
+        :disabled="isReadOnly || element.config.disabled"
         >{{ checkbox.label }}</el-checkbox
       >
     </template>

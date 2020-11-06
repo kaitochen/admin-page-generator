@@ -2,7 +2,7 @@
   <el-date-picker
     class="flex-full"
     v-model="value"
-    :disabled="readOnly || element.config.disabled"
+    :disabled="isReadOnly || element.config.disabled"
     range-separator="-"
     :type="element.config.isRange ? 'datetimerange' : 'datetime'"
     time-arrow-control
@@ -18,6 +18,10 @@ export default {
   data() {
     return {};
   },
-  watch: {}
+  watch: {
+    "element.config.isRange": function(val) {
+      this.value = val ? [] : "";
+    }
+  }
 };
 </script>

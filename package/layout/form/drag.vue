@@ -1,28 +1,5 @@
 <template>
   <el-form ref="form" label-width="120px">
-    <div class="action">
-      <el-button icon="el-icon-back" @click="forgive">返回</el-button>
-      <el-button
-        icon="el-icon-circle-check"
-        v-if="element.config.btn.indexOf('save') > -1"
-        >保存</el-button
-      >
-      <el-button
-        icon="el-icon-upload2"
-        v-if="element.config.btn.indexOf('submit') > -1"
-        >提交</el-button
-      >
-      <el-button
-        icon="el-icon-edit"
-        v-if="element.config.btn.indexOf('edit') > -1"
-        >编辑</el-button
-      >
-      <el-button
-        icon="el-icon-delete"
-        v-if="element.config.btn.indexOf('clear') > -1"
-        >清空</el-button
-      >
-    </div>
     <drag-view :selectForm.sync="selectWidget" :dragData="element"></drag-view>
   </el-form>
 </template>

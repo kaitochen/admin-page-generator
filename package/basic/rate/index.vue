@@ -1,7 +1,7 @@
 <template>
   <el-rate
     v-model="value"
-    :disabled="readOnly || element.config.disabled"
+    :disabled="isReadOnly || element.config.disabled"
     :max="element.config.max"
     :show-score="element.config.showScore"
     :allow-half="element.config.allowHalf"

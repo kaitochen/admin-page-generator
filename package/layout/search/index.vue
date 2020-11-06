@@ -7,7 +7,11 @@
         label-position="left"
         style="width: 100%"
       >
-        <generate-view :dragData="element"></generate-view>
+        <generate-view
+          :dragData="element"
+          :data.sync="generateData"
+          :context="context"
+        ></generate-view>
       </el-form>
     </div>
     <div class="_search-button">
@@ -27,10 +31,31 @@ export default {
     element: {
       type: Object,
       required: true
+    },
+    data: {
+      type: Object,
+      required: true
+    },
+    context: {
+      type: String,
+      default: ""
     }
   },
   data() {
-    return {};
+    return {
+      generateData: this.data
+    };
+  },
+  watch: {
+    data(val) {
+      this.generateData = val;
+    },
+    generateData: {
+      deep: true,
+      handler(val) {
+        this.$emit("update:data", val);
+      }
+    }
   }
 };
 </script>

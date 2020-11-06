@@ -8,30 +8,6 @@
           <el-radio :label="false">否</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="按钮类型">
-        <el-checkbox-group v-model="element.config.btn">
-          <el-checkbox
-            v-for="option in element.config.btnOption"
-            :label="option.value"
-            :key="option.value"
-            >{{ option.label }}</el-checkbox
-          >
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="数据获取地址">
-        <el-input
-          type="text"
-          v-model="element.config.paddingUrl"
-          size="small"
-        />
-      </el-form-item>
-
-      <el-form-item label="数据提交地址">
-        <el-input type="text" v-model="element.config.submitUrl" size="small" />
-      </el-form-item>
-      <el-form-item label="编辑跳转地址">
-        <el-input type="text" v-model="element.config.editUrl" size="small" />
-      </el-form-item>
     </div>
   </el-form>
 </template>

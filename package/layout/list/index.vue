@@ -1,6 +1,10 @@
 <template>
   <div class="_list-page">
-    <generate-view :dragData="element"></generate-view>
+    <generate-view
+      :context="context"
+      :data.sync="generateData"
+      :dragData="element"
+    ></generate-view>
   </div>
 </template>
 <script>
@@ -10,26 +14,38 @@ export default {
   components: {
     GenerateView
   },
+  provide() {
+    return {
+      setReadOnly: () => {
+        return false;
+      }
+    };
+  },
   props: {
     element: {
+      type: Object,
+      required: true
+    },
+    data: {
       type: Object,
       required: true
     }
   },
   data() {
     return {
-      selectWidget: this.selectForm
+      generateData: this.data,
+      context: "list"
     };
   },
   watch: {
-    selectForm(val) {
-      this.selectWidget = val;
+    data(val) {
+      this.generateData = val;
     },
-    selectWidget: {
+    generateData: {
+      deep: true,
       handler(val) {
-        this.$emit("update:selectForm", val);
-      },
-      deep: true
+        this.$emit("update:data", val);
+      }
     }
   }
 };

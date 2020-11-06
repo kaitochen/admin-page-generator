@@ -25,6 +25,12 @@
           v-model="element.config.role"
         ></el-input>
       </el-form-item>
+      <el-form-item label="触发时是否校验数据">
+        <el-radio-group v-model="element.config.valid">
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="按钮类型">
         <el-radio-group v-model="element.config.btnType">
           <el-radio label="text">文字按钮</el-radio>

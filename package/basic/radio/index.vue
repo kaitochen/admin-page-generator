@@ -5,7 +5,7 @@
         :key="radio.value"
         v-model="value"
         :label="radio.value"
-        :disabled="readOnly || element.config.disabled"
+        :disabled="isReadOnly || element.config.disabled"
         >{{ radio.label }}</el-radio
       >
     </template>

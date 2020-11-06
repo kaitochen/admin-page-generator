@@ -31,7 +31,7 @@
       <div
         class="upload-item"
         @click="chooseImage"
-        v-if="!readOnly || element.config.disabled"
+        v-if="!isReadOnly || !element.config.disabled"
         v-show="value.length < element.config.limit"
       >
         <i class="el-icon-plus"></i>

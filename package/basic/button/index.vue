@@ -11,18 +11,16 @@
   >
 </template>
 <script>
+import comp from "../../../mixins/comp";
+import {
+  protocolConverter,
+  protocolMatchData,
+  executeProtocol
+} from "../../../util/converter.js";
 export default {
   name: "pg-button",
-  props: {
-    readOnly: {
-      type: Boolean,
-      default: false
-    },
-    element: {
-      type: Object,
-      required: true
-    }
-  },
+  mixins: [comp],
+  props: {},
   computed: {
     btnType() {
       if (this.element.config.btnType === "text") {
@@ -64,8 +62,48 @@ export default {
     }
   },
   methods: {
+    validFn(valid) {
+      console.log(valid);
+    },
     clickBtn() {
-      console.log(this.element.config.url);
+      const { valid, url } = this.element.config;
+      if (!url) {
+        this.$message.error("该按钮无点击触发，请设置！");
+        return;
+      }
+      try {
+        this.validFn(valid);
+        const { type, data } = protocolConverter(
+          protocolMatchData(url, this.data, this.context)
+        );
+        if (type === "action") {
+          const { action = "" } = data;
+          switch (action) {
+            case "back":
+              console.log(this);
+              break;
+            case "clear":
+              break;
+            default:
+              break;
+          }
+        } else if (type === "request" || type === "http") {
+          executeProtocol
+            .call(this, { type, data })
+            .then(res => {
+              console.log(res);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else if (type === "route") {
+          console.log("route");
+        } else {
+          console.log("other");
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 };

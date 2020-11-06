@@ -3,7 +3,7 @@
     class="flex-full"
     v-model="value"
     :placeholder="element.config.placeholder"
-    :disabled="readOnly || element.config.disabled"
+    :disabled="isReadOnly || element.config.disabled"
     :filterable="element.config.filterable"
     :show-all-levels="element.config.showAllLevels"
     :props="configOptions"

@@ -2,7 +2,7 @@
   <el-color-picker
     class="flex-full"
     v-model="value"
-    :disabled="readOnly || element.config.disabled"
+    :disabled="isReadOnly || element.config.disabled"
     :show-alpha="element.config.isOpacity"
   ></el-color-picker>
 </template>
