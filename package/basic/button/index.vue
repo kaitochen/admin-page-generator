@@ -20,7 +20,12 @@ import {
 export default {
   name: "pg-button",
   mixins: [comp],
-  props: {},
+  props: {
+    scope: {
+      type: Object,
+      default: () => {}
+    }
+  },
   computed: {
     btnType() {
       if (this.element.config.btnType === "text") {

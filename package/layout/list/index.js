@@ -60,6 +60,7 @@ export default {
             width: "50",
             minWidth: "",
             type: "text",
+            prop: "id",
             options: [
               { value: "text", label: "文本" },
               { value: "image", label: "图片" },

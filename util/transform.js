@@ -5,12 +5,9 @@ export const configToData = config => {
   let _data = {};
   switch (type) {
     case "form":
-      formToData(config.columns, _data);
-      data["form"] = _data;
-      break;
     case "list":
       formToData(config.columns, _data);
-      data["list"] = _data;
+      data = _data;
       break;
   }
   return data;
@@ -18,7 +15,13 @@ export const configToData = config => {
 
 export const formToData = (config, _form) => {
   config.forEach(comp => {
-    if (FORM_COMPONENT.indexOf(comp.type) > -1) {
+    if (comp.type === "search") {
+      _form["search"] = {};
+      formToData(comp.columns, _form["search"]);
+    } else if (comp.type === "table") {
+      _form["table"] = [];
+      tableToData(comp.columns, _form["table"]);
+    } else if (FORM_COMPONENT.indexOf(comp.type) > -1) {
       let _prop = comp.config.prop;
       let value = comp.config.defaultValue;
       _form[_prop] = value;
@@ -30,6 +33,15 @@ export const formToData = (config, _form) => {
   });
 };
 
+export const tableToData = (config, _form) => {
+  let _obj = {};
+  config.forEach(tableItem => {
+    if (tableItem.type === "table-text") {
+      _obj[tableItem.config.prop] = "";
+    }
+  });
+  _form.push(_obj);
+};
 export const uploadAcceptTransform = types => {
   if (types.indexOf("all") > -1 || types.length <= 0) {
     return "*";

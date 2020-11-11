@@ -1,6 +1,11 @@
 <template>
   <div class="pg-table-container">
-    <el-table class="pg-table" :data="data" border>
+    <el-table
+      class="pg-table"
+      :data="dataList"
+      border
+      @selection-change="selectionChange"
+    >
       <el-table-column
         type="selection"
         width="50"
@@ -16,7 +21,24 @@
           :width="col.config.width"
           :min-width="col.config.minWidth"
         >
+          <template v-slot="scope">
+            <template v-if="col.config.type === 'text'">
+              {{ scope.row[col.config.prop] }}
+            </template>
+            <template v-if="col.config.type === 'image'">
+              <el-image
+                style="width: 100px; height: 100px"
+                :src="scope.row[col.config.prop]"
+                :preview-src-list="scope.row[col.config.prop]"
+              >
+              </el-image>
+            </template>
+            <template v-if="col.config.type === 'action'">
+              <el-link type="primary">{{ scope.row[col.config.prop] }}</el-link>
+            </template>
+          </template>
         </el-table-column>
+
         <el-table-column
           v-if="col.type === 'table-operation'"
           :key="col.key"
@@ -30,6 +52,8 @@
               :scope="scope"
               :dragData="col"
               :isHorizontal="true"
+              :data.sync="generateData"
+              :context="context"
             ></generate-view>
           </template>
         </el-table-column>
@@ -60,17 +84,39 @@ export default {
     element: {
       type: Object,
       required: true
+    },
+    data: {
+      type: Object,
+      required: true
     }
   },
   data() {
     return {
-      data: [
+      generateData: this.data,
+      context: "table",
+      dataList: [
         {
           nickname: "这就是昵称",
           username: "这就是账号"
         }
       ]
     };
+  },
+  watch: {
+    data(val) {
+      this.generateData = val;
+    },
+    generateData: {
+      deep: true,
+      handler(val) {
+        this.$emit("update:data", val);
+      }
+    }
+  },
+  methods: {
+    selectionChange(val) {
+      console.log(val);
+    }
   }
 };
 </script>

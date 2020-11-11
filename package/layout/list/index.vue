@@ -1,7 +1,6 @@
 <template>
   <div class="_list-page">
     <generate-view
-      :context="context"
       :data.sync="generateData"
       :dragData="element"
     ></generate-view>
@@ -33,8 +32,7 @@ export default {
   },
   data() {
     return {
-      generateData: this.data,
-      context: "list"
+      generateData: this.data
     };
   },
   watch: {

@@ -35,15 +35,12 @@ export default {
     data: {
       type: Object,
       required: true
-    },
-    context: {
-      type: String,
-      default: ""
     }
   },
   data() {
     return {
-      generateData: this.data
+      generateData: this.data,
+      context: "search"
     };
   },
   watch: {

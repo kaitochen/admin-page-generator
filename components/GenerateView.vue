@@ -9,6 +9,7 @@
         :element="element"
         :data.sync="generateData"
         :context="context"
+        :scope="scope"
       >
       </component>
       <el-form-item
@@ -26,6 +27,7 @@
           :element="element"
           :data.sync="generateData"
           :context="context"
+          :scope="scope"
         ></component>
       </el-form-item>
     </template>

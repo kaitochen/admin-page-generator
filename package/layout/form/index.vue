@@ -2,12 +2,11 @@
   <el-form
     ref="form"
     label-width="150px"
-    :model="generateData.form"
+    :model="generateData"
     label-position="left"
     class="pg-form"
   >
     <generate-view
-      :context="context"
       :data.sync="generateData"
       :dragData="element"
     ></generate-view>
@@ -39,8 +38,7 @@ export default {
   },
   data() {
     return {
-      generateData: this.data,
-      context: "form"
+      generateData: this.data
     };
   },
   watch: {
