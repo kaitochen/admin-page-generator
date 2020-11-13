@@ -299,6 +299,11 @@ export default {
       ]
     };
   },
+  watch: {
+    select(val) {
+      this.value = val;
+    }
+  },
   methods: {
     changeSelect(val) {
       this.$emit("update:select", val);

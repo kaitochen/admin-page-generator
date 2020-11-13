@@ -224,17 +224,17 @@ ul {
     flex: 1;
     min-height: 100vh;
     background-color: #f2f2f2;
-    overflow: auto;
+    // overflow: auto;
     position: relative;
-    padding-top: 50px;
+    // padding-top: 50px;
     box-sizing: border-box;
     .pg-center-tool {
       height: 50px;
       background-color: #ffffff;
-      position: fixed;
-      top: 0;
-      left: 300px;
-      right: 300px;
+      // position: fixed;
+      // top: 0;
+      // left: 300px;
+      // right: 300px;
       z-index: 9;
       display: flex;
       flex-direction: row;
@@ -250,6 +250,7 @@ ul {
       height: 100%;
       padding: 10px;
       box-sizing: border-box;
+      overflow: auto;
       .widget-view + .widget-view {
         margin-top: 5px;
       }
