@@ -53,6 +53,7 @@
           <el-button type="primary" @click="saveConfig">保存配置</el-button>
           <el-button type="primary" @click="importConfig">导入配置</el-button>
           <el-button type="primary" @click="clear">清空</el-button>
+          <el-button type="primary" @click="quit">退出</el-button>
         </div>
         <el-form
           ref="form"
@@ -85,6 +86,7 @@
       :with-header="false"
       size="90%"
       direction="ttb"
+      :append-to-body="true"
     >
       <div v-if="drawer">
         <generate-view
@@ -103,10 +105,10 @@ import GenerateView from "./GenerateView";
 import PageConfigForm from "./PageConfigForm";
 
 import { configs } from "./componentsConfig.js";
-import { formConfig } from "../mock/index.js";
+// import { formConfig } from "../mock/index.js";
 import { validateConfigLength } from "../util/validate.js";
 import { configToData } from "../util/transform.js";
-import { cloneWidget } from "../util/init.js";
+import { importWidget } from "../util/init.js";
 export default {
   name: "generate-form",
   components: {
@@ -152,13 +154,21 @@ export default {
     },
     saveConfig() {
       let root = this.dragData.columns;
-      console.log(JSON.stringify(root));
+      this.$emit("save", root);
     },
     importConfig() {
-      this.dragData.columns = cloneWidget(formConfig);
+      this.$emit("import", (page, config) => {
+        this.dragData.columns = importWidget(page);
+        this.pageConfig = {
+          context: config
+        };
+      });
     },
     clear() {
       this.dragData.columns = [];
+    },
+    quit() {
+      this.$emit("quit");
     }
   },
   mounted() {}
@@ -222,7 +232,7 @@ ul {
   }
   .pg-center-container {
     flex: 1;
-    min-height: 100vh;
+    height: 100vh;
     background-color: #f2f2f2;
     // overflow: auto;
     position: relative;
@@ -247,7 +257,7 @@ ul {
       min-height: 45px;
     }
     .generator-container {
-      height: 100%;
+      height: calc(100vh - 50px);
       padding: 10px;
       box-sizing: border-box;
       overflow: auto;

@@ -1,5 +1,5 @@
 <template>
-  <div class="_action">
+  <div class="action">
     <drag-view
       :isHorizontal="true"
       :selectForm.sync="selectWidget"
@@ -62,7 +62,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-._action {
+.action {
   width: 100%;
   min-height: 40px;
   display: flex;

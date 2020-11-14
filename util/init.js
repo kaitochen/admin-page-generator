@@ -84,6 +84,59 @@ export const cloneWidget = obj => {
   }
   throw new Error("Unable to clone obj! Its type isn't supported.");
 };
+export const importWidget = obj => {
+  let _this = obj;
+  // Handle null or undefined or function
+  if (null == _this || "object" != typeof _this) return _this;
+  // Handle the 3 simple types, Number and String and Boolean
+  if (
+    _this instanceof Number ||
+    _this instanceof String ||
+    _this instanceof Boolean ||
+    _this instanceof Date
+  )
+    return _this;
+
+  // return _this;
+  // Handle Date
+  // Handle Array or Object
+  if (_this.constructor == Object) {
+    const type = _this.type;
+    let key = "";
+    if (type) {
+      key = generateKey(type);
+    } else {
+      key = generateKey("col");
+    }
+    _this.key = key;
+    if (!_this.config.prop) {
+      _this.config = Object.assign(_this.config, { prop: key });
+    }
+    if (_this.columns) {
+      _this.columns = cloneWidget(_this.columns);
+    }
+    return _this;
+  }
+  if (_this.constructor == Array) {
+    return _this.map(item => {
+      const type = item.type;
+      let key = "";
+      if (type) {
+        key = generateKey(type);
+      } else {
+        key = generateKey("col");
+      }
+      item.key = key;
+      if (item.config && !item.config.prop)
+        item.config = Object.assign(item.config, { prop: key });
+      if (item.columns) {
+        _this.columns = cloneWidget(item.columns);
+      }
+      return item;
+    });
+  }
+  throw new Error("Unable to clone obj! Its type isn't supported.");
+};
 export const generateKey = key => {
   return `${key}_${new Date().getTime()}_${parseInt(Math.random() * 100000)}`;
 };
