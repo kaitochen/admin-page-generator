@@ -113,7 +113,7 @@ export const importWidget = obj => {
       _this.config = Object.assign(_this.config, { prop: key });
     }
     if (_this.columns) {
-      _this.columns = cloneWidget(_this.columns);
+      _this.columns = importWidget(_this.columns);
     }
     return _this;
   }
@@ -130,7 +130,7 @@ export const importWidget = obj => {
       if (item.config && !item.config.prop)
         item.config = Object.assign(item.config, { prop: key });
       if (item.columns) {
-        _this.columns = cloneWidget(item.columns);
+        _this.columns = importWidget(item.columns);
       }
       return item;
     });
