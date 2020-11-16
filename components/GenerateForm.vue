@@ -77,6 +77,14 @@
           <el-tab-pane label="页面配置" name="page">
             <page-config-form :element="pageConfig"></page-config-form>
           </el-tab-pane>
+          <el-tab-pane label="历史版本" name="history">
+            <history-record
+              :id="id"
+              :historyList="historyList"
+              @check="checkHistory"
+              @delete="deleteHistory"
+            ></history-record>
+          </el-tab-pane>
         </el-tabs>
       </aside>
     </div>
@@ -95,6 +103,32 @@
         ></generate-view>
       </div>
     </el-drawer>
+    <el-dialog
+      title="保存"
+      :visible.sync="dialogVisible"
+      width="500px"
+      :append-to-body="true"
+    >
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="{
+          name: [
+            { required: true, message: '版本名称不能为空', trigger: 'change' }
+          ]
+        }"
+        label-position="left"
+        label-width="80px"
+      >
+        <el-form-item label="版本名称" prop="name">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="_savePage">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -103,7 +137,7 @@ import GenerateConfigForm from "./GenerateConfigForm";
 import DragView from "./DragView";
 import GenerateView from "./GenerateView";
 import PageConfigForm from "./PageConfigForm";
-
+import HistoryRecord from "./HistoryRecord";
 import { configs } from "./componentsConfig.js";
 // import { formConfig } from "../mock/index.js";
 import { validateConfigLength } from "../util/validate.js";
@@ -116,7 +150,14 @@ export default {
     GenerateConfigForm,
     DragView,
     GenerateView,
-    PageConfigForm
+    PageConfigForm,
+    HistoryRecord
+  },
+  props: {
+    id: {
+      type: [String, Number],
+      required: true
+    }
   },
   data() {
     return {
@@ -131,7 +172,12 @@ export default {
       pageConfig: {
         context: ""
       },
-      generateData: {}
+      generateData: {},
+      historyList: [],
+      dialogVisible: false,
+      form: {
+        name: ""
+      }
     };
   },
   methods: {
@@ -152,9 +198,45 @@ export default {
         this.$message.error("根节点只能有一个组件");
       }
     },
+    checkHistory(data) {
+      this.$emit("getHistoryInfo", {
+        data: data,
+        callback: result => {
+          const { content } = result;
+          const _content = JSON.parse(content);
+          this.dragData = {
+            columns: _content.page
+          };
+          this.pageConfig = _content.config;
+        }
+      });
+    },
+    deleteHistory(data) {
+      console.log(data);
+      this.$emit("deleteHistory", {
+        data: data,
+        callback: result => {
+          this.getHistory();
+          console.log(result);
+        }
+      });
+    },
     saveConfig() {
-      let root = this.dragData.columns;
-      this.$emit("save", root);
+      this.dialogVisible = true;
+      // let root = this.dragData.columns;
+      // this.$emit("save", root);
+    },
+    _savePage() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.dialogVisible = false;
+          let root = this.dragData.columns;
+          this.$emit("save", {
+            content: { page: root, config: this.pageConfig },
+            name: this.form.name
+          });
+        }
+      });
     },
     importConfig() {
       this.$emit("import", (page, config) => {
@@ -169,9 +251,16 @@ export default {
     },
     quit() {
       this.$emit("quit");
+    },
+    getHistory() {
+      this.$emit("getHistory", data => {
+        this.historyList = data;
+      });
     }
   },
-  mounted() {}
+  mounted() {
+    this.getHistory();
+  }
 };
 </script>
 <style lang="scss">
