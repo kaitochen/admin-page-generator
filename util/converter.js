@@ -70,10 +70,11 @@ export const protocolMatchData = (url, data, context) => {
   let matchResult = url.match(reg);
   if (matchResult && matchResult.length > 0) {
     let keys = Object.keys(data);
-    let _keys = Object.keys(data[context]);
+    let _keys = context ? Object.keys(data[context]) : Object.keys(data);
     matchResult.forEach(item => {
       try {
         const params = item.replace("{", "").replace("}", "");
+
         let key = params.split(".");
         let value = "";
         if (key.length > 1) {
@@ -101,12 +102,21 @@ export const protocolMatchData = (url, data, context) => {
           }
         } else {
           let _key = key[0];
-          value =
-            _keys.indexOf(_key) > -1
-              ? data[context][_key]
-              : keys.indexOf(_key) > -1
-              ? data[_key]
-              : "";
+          if (_key === "_") {
+            value = data;
+            let str = "";
+            for (let k in value) {
+              str += `-d "${k}=${value[k]}" `;
+            }
+            value = str;
+          } else {
+            value =
+              _keys.indexOf(_key) > -1
+                ? data[context][_key]
+                : keys.indexOf(_key) > -1
+                ? data[_key]
+                : "";
+          }
         }
         url = url.replace(item, value);
       } catch (e) {
@@ -114,6 +124,7 @@ export const protocolMatchData = (url, data, context) => {
       }
     });
   }
+  console.log(url);
   return url;
 };
 

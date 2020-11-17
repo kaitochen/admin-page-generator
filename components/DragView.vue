@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     _handleWidgetAdd(evt) {
-      // console.log("add", evt);
+      console.log("add", evt);
       // console.log("end", evt);
       const newIndex = evt.newIndex;
       const key = this.generateKey(this.dragData.columns[newIndex]["type"]);

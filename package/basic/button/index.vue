@@ -93,16 +93,9 @@ export default {
               break;
           }
         } else if (type === "request" || type === "http") {
-          executeProtocol
-            .call(this, { type, data })
-            .then(res => {
-              console.log(res);
-            })
-            .catch(err => {
-              console.log(err);
-            });
+          executeProtocol.call(this, { type, data });
         } else if (type === "route") {
-          console.log("route");
+          executeProtocol.call(this, { type, data });
         } else {
           console.log("other");
         }

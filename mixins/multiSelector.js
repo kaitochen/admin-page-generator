@@ -15,9 +15,9 @@ export default {
     },
     data(newValue, oldValue) {
       if (
+        this.element.config.dynamic &&
         Object.keys(oldValue).length <= 0 &&
-        Object.keys(newValue).length > 0 &&
-        this.element.config.dynamic
+        Object.keys(newValue).length > 0
       ) {
         this.curlCommand(this.element.config.dynamicUrl, this.curlCallback);
       }

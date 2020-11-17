@@ -1,12 +1,12 @@
 <template>
-  <el-checkbox-group v-model="value">
+  <el-checkbox-group
+    v-model="value"
+    :disabled="isReadOnly || element.config.disabled"
+  >
     <template v-for="checkbox in options">
-      <el-checkbox
-        :key="checkbox.value"
-        :label="checkbox.value"
-        :disabled="isReadOnly || element.config.disabled"
-        >{{ checkbox.label }}</el-checkbox
-      >
+      <el-checkbox :key="checkbox.value" :label="checkbox.value">{{
+        checkbox.label
+      }}</el-checkbox>
     </template>
   </el-checkbox-group>
 </template>
@@ -25,10 +25,8 @@ export default {
   mounted() {
     this.value = [];
     let dynamic = this.element.config.dynamic;
-    if (dynamic) {
-      this.options = [];
-    } else {
-      this.options = this.element.config.options;
+    if (!dynamic) {
+      this.options = [...this.element.config.options];
     }
   }
 };

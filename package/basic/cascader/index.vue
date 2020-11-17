@@ -28,6 +28,7 @@ export default {
         lazy: _this.element.config.lazy,
         lazyLoad(node, resolve) {
           let { value } = node;
+          console.log(node);
           if (value === null || value === undefined) {
             return;
           }
@@ -39,7 +40,12 @@ export default {
                   .call(_this, params)
                   .then(res => {
                     if (res && res.code === 200) {
-                      resolve(res.data);
+                      resolve(
+                        res.data.map(item => ({
+                          value: item.key,
+                          label: item.value
+                        }))
+                      );
                     } else {
                       resolve([]);
                     }
@@ -55,6 +61,33 @@ export default {
           }
         }
       };
+    }
+  },
+  mounted() {
+    const _this = this;
+    try {
+      _this.curlCommand(_this.element.config.dynamicUrl, params => {
+        if (params.type === "request" || params.type === "http") {
+          executeProtocol
+            .call(_this, params)
+            .then(res => {
+              if (res && res.code === 200) {
+                this.options = res.data.map(item => ({
+                  value: item.key,
+                  label: item.value
+                }));
+              } else {
+                this.options = [];
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              this.options = [];
+            });
+        }
+      });
+    } catch (e) {
+      console.log("error", e);
     }
   }
 };
