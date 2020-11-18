@@ -20,6 +20,9 @@ export default {
   data() {
     return {};
   },
-  watch: {}
+  watch: {},
+  mounted() {
+    this.value = +this.element.config.defaultValue || 0;
+  }
 };
 </script>

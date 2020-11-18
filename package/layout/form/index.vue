@@ -33,6 +33,13 @@ export default {
     return {
       setReadOnly: () => {
         return !this.element.config.editable;
+      },
+      validate: () => {
+        return new Promise(resolve => {
+          this.$refs.form.validate(valid => {
+            resolve(valid);
+          });
+        });
       }
     };
   },
@@ -56,14 +63,6 @@ export default {
   methods: {
     forgive() {
       this.$emit("forgive");
-    },
-    btnEvent(type) {
-      switch (type) {
-        case "save":
-      }
-      this.$refs.form.validate(valid => {
-        console.log(valid, this.generateData);
-      });
     }
   }
 };

@@ -16,11 +16,13 @@
         />
       </el-form-item>
       <el-form-item label="默认值">
-        <el-input
-          type="text"
+        <el-input-number
+          class="flex-full"
           v-model="element.config.defaultValue"
+          :min="element.config.min"
+          :max="element.config.max"
           size="small"
-        />
+        ></el-input-number>
       </el-form-item>
 
       <el-form-item label="是否必填">

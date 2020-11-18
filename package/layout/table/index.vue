@@ -64,11 +64,13 @@
       v-if="element.config.pagination"
       style="padding: 10px 0;text-align:center;background-color: #FFFFFF"
       background
+      @current-change="changePage"
+      @size-change="changeSize"
       :page-sizes="[10, 20, 50, 100]"
-      :total="500"
-      :page-size="10"
-      :current-page="1"
-      layout="sizes,prev, pager, next,jumper"
+      :total="_pageTotal"
+      :page-size="_pageSize"
+      :current-page="_pageIndex"
+      layout="sizes,prev,pager,next,jumper"
     >
     </el-pagination>
   </div>
@@ -90,16 +92,25 @@ export default {
       required: true
     }
   },
+  inject: ["getData", "pageIndex", "pageSize", "pageTotal"],
+  computed: {
+    _pageIndex() {
+      return this.pageIndex();
+    },
+    _pageSize() {
+      return this.pageSize();
+    },
+    _pageTotal() {
+      return this.pageTotal();
+    },
+    dataList() {
+      return this.generateData[this.context];
+    }
+  },
   data() {
     return {
       generateData: this.data,
-      context: "table",
-      dataList: [
-        {
-          nickname: "这就是昵称",
-          username: "这就是账号"
-        }
-      ]
+      context: "table"
     };
   },
   watch: {
@@ -116,6 +127,12 @@ export default {
   methods: {
     selectionChange(val) {
       console.log(val);
+    },
+    changePage(val) {
+      this.getData(val);
+    },
+    changeSize(val) {
+      this.getData(1, val);
     }
   }
 };

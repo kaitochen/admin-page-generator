@@ -124,7 +124,6 @@ const validateText = el => {
 };
 const validateUpload = () => {
   return (rule, value, callback) => {
-    console.log(value);
     if (value instanceof Array && value.length <= 0) {
       callback(new Error("该项为必填，不能为空"));
     } else {
@@ -146,7 +145,6 @@ export const validateEl = el => {
       break;
     default:
       _validateFn = (rule, value, callback) => {
-        console.log(value);
         if (
           value == undefined ||
           value == null ||

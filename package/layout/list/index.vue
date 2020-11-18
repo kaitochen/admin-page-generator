@@ -3,6 +3,7 @@
     <generate-view
       :data.sync="generateData"
       :dragData="element"
+      @search="search"
     ></generate-view>
   </div>
 </template>
@@ -44,6 +45,11 @@ export default {
       handler(val) {
         this.$emit("update:data", val);
       }
+    }
+  },
+  methods: {
+    search() {
+      this.$emit("search");
     }
   }
 };

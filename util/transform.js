@@ -95,7 +95,7 @@ export const filterFile = (files, types, maxSize) => {
     let type = file.name.split(".");
     type = type[type.length - 1];
     type = type.toLowerCase();
-    console.log(file, maxSize);
+    // console.log(file, maxSize);
     if (typeArr.indexOf(type) > -1 && file.size < maxByte) {
       result.push(file);
     } else {
@@ -124,7 +124,7 @@ export const filterMedia = (files, maxSize) => {
     let type = file.name.split(".");
     type = type[type.length - 1];
     type = type.toLowerCase();
-    console.log(file, maxSize);
+    // console.log(file, maxSize);
     if (typeArr.indexOf(type) > -1 && file.size < maxByte) {
       result.push(file);
     } else {
@@ -153,7 +153,7 @@ export const filterImage = (files, maxSize) => {
     let type = file.name.split(".");
     type = type[type.length - 1];
     type = type.toLowerCase();
-    console.log(file, maxSize);
+    // console.log(file, maxSize);
     if (typeArr.indexOf(type) > -1 && file.size < maxByte) {
       result.push(file);
     } else {

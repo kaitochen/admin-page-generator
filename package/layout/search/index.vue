@@ -15,8 +15,10 @@
       </el-form>
     </div>
     <div class="_search-button">
-      <el-button type="primary" icon="el-icon-search">搜索</el-button>
-      <el-button icon="el-icon-circle-close">清空</el-button>
+      <el-button type="primary" icon="el-icon-search" @click="search"
+        >搜索</el-button
+      >
+      <el-button icon="el-icon-circle-close" @click="clear">清空</el-button>
     </div>
   </div>
 </template>
@@ -37,6 +39,7 @@ export default {
       required: true
     }
   },
+  inject: ["getData"],
   data() {
     return {
       generateData: this.data,
@@ -52,6 +55,18 @@ export default {
       handler(val) {
         this.$emit("update:data", val);
       }
+    }
+  },
+  methods: {
+    search() {
+      this.getData();
+    },
+    clear() {
+      const search = this.generateData[this.context];
+      for (let k in search) {
+        search[k] = "";
+      }
+      this.generateData[this.context] = search;
     }
   }
 };

@@ -29,12 +29,24 @@ export default {
     }
   },
   watch: {
-    data(val) {
-      let prop = this.element.config.prop;
-      if (this.context) {
-        this.value = val[this.context][prop];
-      } else {
-        this.value = val[prop];
+    data: {
+      deep: true,
+      handler(val) {
+        let prop = this.element.config.prop;
+        let _value;
+        if (this.context) {
+          _value = val[this.context][prop];
+        } else {
+          _value = val[prop];
+        }
+        this.value =
+          this.element.config.multiple &&
+          _value !== undefined &&
+          _value !== null &&
+          _value !== "" &&
+          typeof _value === "string"
+            ? _value.split(",")
+            : _value;
       }
     },
     value: {

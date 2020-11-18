@@ -212,12 +212,12 @@ export default {
       });
     },
     deleteHistory(data) {
-      console.log(data);
+      // console.log(data);
       this.$emit("deleteHistory", {
         data: data,
-        callback: result => {
+        callback: () => {
           this.getHistory();
-          console.log(result);
+          // console.log(result);
         }
       });
     },

@@ -10,6 +10,7 @@
         :data.sync="generateData"
         :context="context"
         :scope="scope"
+        @search="search"
       >
       </component>
       <el-form-item
@@ -28,6 +29,7 @@
           :data.sync="generateData"
           :context="context"
           :scope="scope"
+          @search="search"
         ></component>
       </el-form-item>
     </template>
@@ -95,6 +97,9 @@ export default {
             required: false
           };
       return vali;
+    },
+    search() {
+      this.$emit("search");
     }
   },
   mounted() {

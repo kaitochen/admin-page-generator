@@ -26,6 +26,34 @@ export default {
       default: () => {}
     }
   },
+  inject: {
+    validate: {
+      default: () => {
+        return Promise.resolve(true);
+      }
+    },
+    insertDialog: {
+      default: () => {
+        return false;
+      }
+    }
+  },
+  data() {
+    return {
+      generateData: this.data
+    };
+  },
+  watch: {
+    data(val) {
+      this.generateData = val;
+    },
+    generateData: {
+      deep: true,
+      handler(val) {
+        this.$emit("update:data", val);
+      }
+    }
+  },
   computed: {
     btnType() {
       if (this.element.config.btnType === "text") {
@@ -41,7 +69,7 @@ export default {
         return {};
       } else {
         let style = {};
-        console.log(this.element.config.btnStyle);
+        // console.log(this.element.config.btnStyle);
         switch (this.element.config.btnStyle) {
           case "ghost":
             style = { color: "#333" };
@@ -67,27 +95,55 @@ export default {
     }
   },
   methods: {
-    validFn(valid) {
-      console.log(valid);
-    },
     clickBtn() {
       const { valid, url } = this.element.config;
       if (!url) {
         this.$message.error("该按钮无点击触发，请设置！");
         return;
       }
+      if (valid) {
+        this.validate().then(_valid => {
+          if (_valid) {
+            this.dealProtocol(url);
+          }
+        });
+      } else {
+        this.dealProtocol(url);
+      }
+    },
+    dealProtocol(url) {
       try {
-        this.validFn(valid);
+        let source;
+        if (this.scope && this.scope.row) {
+          source = [this.scope.row, this.data];
+        } else {
+          source = this.data;
+        }
         const { type, data } = protocolConverter(
-          protocolMatchData(url, this.data, this.context)
+          protocolMatchData(url, source, this.context)
         );
+        // console.log(type, data);
         if (type === "action") {
+          // console.log("action");
           const { action = "" } = data;
           switch (action) {
             case "back":
-              console.log(this);
+              this.$router.go(-1);
               break;
             case "clear":
+              if (this.context && this.generateData[this.context]) {
+                const _data = this.generateData[this.context];
+                for (let k in _data) {
+                  _data[k] = "";
+                }
+                this.generateData[this.context] = _data;
+              } else {
+                const _data = this.generateData;
+                for (let k in _data) {
+                  _data[k] = "";
+                }
+                this.generateData = _data;
+              }
               break;
             default:
               break;

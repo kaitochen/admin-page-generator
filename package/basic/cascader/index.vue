@@ -28,7 +28,7 @@ export default {
         lazy: _this.element.config.lazy,
         lazyLoad(node, resolve) {
           let { value } = node;
-          console.log(node);
+          // console.log(node);
           if (value === null || value === undefined) {
             return;
           }

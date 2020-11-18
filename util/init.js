@@ -144,26 +144,10 @@ export const generateKey = key => {
 export class GenerateNavigate {
   constructor(options) {
     let { page, route, request, http } = options;
-    this.pageNavigate = () => {
-      return new Promise(resolve => {
-        resolve();
-      });
-    };
-    this.routeNavigate = () => {
-      return new Promise(resolve => {
-        resolve();
-      });
-    };
-    this.requestNavigate = () => {
-      return new Promise(resolve => {
-        resolve();
-      });
-    };
-    this.httpNavigate = () => {
-      return new Promise(resolve => {
-        resolve();
-      });
-    };
+    this.pageNavigate = () => {};
+    this.routeNavigate = () => {};
+    this.requestNavigate = () => {};
+    this.httpNavigate = () => {};
     this._page = page;
     this._route = route;
     this._request = request;
