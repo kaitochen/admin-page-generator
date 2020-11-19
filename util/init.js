@@ -199,26 +199,32 @@ export class GenerateNavigate {
 }
 
 export class GeneratorUpload {
-  constructor() {
+  constructor(options) {
+    const {
+      ali = () => {
+        return Promise.resolve();
+      },
+      tx = () => () => {
+        return Promise.resolve();
+      },
+      qiniu = () => () => {
+        return Promise.resolve();
+      },
+      server = () => () => {
+        return Promise.resolve();
+      }
+    } = options;
     this._aliUpload = file => {
-      return new Promise(resolve => {
-        resolve(file);
-      });
+      return ali(file);
     };
     this._txUpload = file => {
-      return new Promise(resolve => {
-        resolve(file);
-      });
+      return tx(file);
     };
     this._qiniuUpload = file => {
-      return new Promise(resolve => {
-        resolve(file);
-      });
+      return qiniu(file);
     };
     this._serverUpload = file => {
-      return new Promise(resolve => {
-        resolve(file);
-      });
+      return server(file);
     };
   }
   setUploadFn(type, cb) {

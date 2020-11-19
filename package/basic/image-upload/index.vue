@@ -16,9 +16,9 @@
             <div class="image drag-image" :key="index">
               <el-image
                 class="image"
-                :src="fileToImage(file)"
+                :src="file"
                 fit="cover"
-                :preview-src-list="[fileToImage(file)]"
+                :preview-src-list="[file]"
               ></el-image>
               <span
                 class="close el-icon-error"
@@ -83,9 +83,9 @@ export default {
         this.$refs.file.click();
       }
     },
-    fileToImage(file) {
-      return window.URL.createObjectURL(file);
-    },
+    // fileToImage(file) {
+    //   return window.URL.createObjectURL(file);
+    // },
     cancel() {
       if (this.readyFile.length > 0) {
         this.$confirm("还有文件未上传，确定关闭？", {
@@ -120,7 +120,21 @@ export default {
       this.value.splice(index, 1);
     },
     _uploadFile(files, cb) {
-      cb(files);
+      let _upload = [];
+      for (let i = 0; i < files.length; i++) {
+        _upload.push(this.$upload.aliUpload(files[i]));
+      }
+      Promise.all(_upload)
+        .then(res => {
+          cb(
+            res.map(item => {
+              return item.url;
+            })
+          );
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   mounted() {

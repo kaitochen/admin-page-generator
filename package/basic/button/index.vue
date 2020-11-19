@@ -36,6 +36,19 @@ export default {
       default: () => {
         return false;
       }
+    },
+    closeDialog: {
+      default: () => {
+        return false;
+      }
+    },
+    dialogKey: {
+      default: ""
+    },
+    refresh: {
+      default: () => {
+        return false;
+      }
     }
   },
   data() {

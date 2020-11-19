@@ -28,17 +28,16 @@ export default {
         lazy: _this.element.config.lazy,
         lazyLoad(node, resolve) {
           let { value } = node;
-          // console.log(node);
           if (value === null || value === undefined) {
             return;
           }
           try {
             _this.curlCommand(_this.element.config.dynamicUrl, params => {
-              params.data.url += "/" + value;
+              params.data.url += _this.getNodeValue(node);
               if (params.type === "request" || params.type === "http") {
-                executeProtocol
-                  .call(_this, params)
-                  .then(res => {
+                executeProtocol.call(_this, {
+                  ...params,
+                  cb: res => {
                     if (res && res.code === 200) {
                       resolve(
                         res.data.map(item => ({
@@ -49,11 +48,8 @@ export default {
                     } else {
                       resolve([]);
                     }
-                  })
-                  .catch(err => {
-                    console.log(err);
-                    resolve([]);
-                  });
+                  }
+                });
               }
             });
           } catch (e) {
@@ -63,15 +59,25 @@ export default {
       };
     }
   },
+  methods: {
+    getNodeValue(node) {
+      if (node.parent) {
+        return this.getNodeValue(node.parent) + "/" + node.value;
+      } else {
+        return "/" + node.value;
+      }
+    }
+  },
   mounted() {
     const _this = this;
     try {
       _this.curlCommand(_this.element.config.dynamicUrl, params => {
         if (params.type === "request" || params.type === "http") {
-          executeProtocol
-            .call(_this, params)
-            .then(res => {
+          executeProtocol.call(_this, {
+            ...params,
+            cb: res => {
               if (res && res.code === 200) {
+                console.log("cascade", res);
                 this.options = res.data.map(item => ({
                   value: item.key,
                   label: item.value
@@ -79,11 +85,8 @@ export default {
               } else {
                 this.options = [];
               }
-            })
-            .catch(err => {
-              console.log(err);
-              this.options = [];
-            });
+            }
+          });
         }
       });
     } catch (e) {

@@ -34,8 +34,8 @@
         >
           <el-image
             class="images-item"
-            :src="fileToImage(item)"
-            :preview-src-list="[fileToImage(item)]"
+            :src="item"
+            :preview-src-list="[item]"
             fit="cover"
           ></el-image>
           <span class="image-icon el-icon-success"></span>

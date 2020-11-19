@@ -26,8 +26,8 @@ const install = function(Vue, options) {
   Vue.prototype.isEmptyObject = isEmptyObject;
   Vue.prototype.cloneWidget = cloneWidget;
   Vue.prototype.generateKey = generateKey;
-  Vue.prototype.navigator = new GenerateNavigate(options);
-  Vue.prototype.$upload = new GeneratorUpload();
+  Vue.prototype.navigator = new GenerateNavigate(options.navigator);
+  Vue.prototype.$upload = new GeneratorUpload(options.upload);
   components.forEach(component => {
     Vue.component(component.name, component);
   });

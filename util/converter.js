@@ -216,20 +216,16 @@ export const protocolMatchData = (url, data, context) => {
 };
 
 export const executeProtocol = function(params) {
-  const { type, data } = params;
+  const { type, data, cb = () => {} } = params;
   const _t = this;
   switch (type) {
     case "page":
-      this.navigator.pageNavigate(_t, data);
-      break;
+      return this.navigator.pageNavigate(_t, data, cb);
     case "route":
-      this.navigator.routeNavigate(_t, data);
-      break;
+      return this.navigator.routeNavigate(_t, data, cb);
     case "request":
-      this.navigator.requestNavigate(_t, data);
-      break;
+      return this.navigator.requestNavigate(_t, data, cb);
     case "http":
-      this.navigator.httpNavigate(_t, data);
-      break;
+      return this.navigator.httpNavigate(_t, data, cb);
   }
 };

@@ -27,9 +27,10 @@
             </template>
             <template v-if="col.config.type === 'image'">
               <el-image
-                style="width: 100px; height: 100px"
-                :src="scope.row[col.config.prop]"
-                :preview-src-list="scope.row[col.config.prop]"
+                style="height: 100px"
+                fit="contain"
+                :src="setImage(scope.row, col.config.prop)"
+                :preview-src-list="setImageList(scope.row, col.config.prop)"
               >
               </el-image>
             </template>
@@ -133,6 +134,24 @@ export default {
     },
     changeSize(val) {
       this.getData(1, val);
+    },
+    setImage(data, prop) {
+      const value = data[prop];
+      if (value) {
+        const img = value.split(",");
+        return img[0];
+      } else {
+        return "";
+      }
+    },
+    setImageList(data, prop) {
+      const value = data[prop];
+      if (value) {
+        const img = value.split(",");
+        return img;
+      } else {
+        return [];
+      }
     }
   }
 };
