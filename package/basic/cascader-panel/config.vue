@@ -65,7 +65,7 @@
 </template>
 <script>
 export default {
-  name: "cascader-config",
+  name: "cascader-panel-config",
   props: {
     element: {
       type: Object,

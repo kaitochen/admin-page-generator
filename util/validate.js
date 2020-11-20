@@ -131,6 +131,40 @@ const validateUpload = () => {
     }
   };
 };
+const validateArrayObj = () => {
+  return (rule, value, callback) => {
+    if (value instanceof Array && value.length <= 0) {
+      callback(new Error("该项为必填，不能为空"));
+    } else if (value instanceof Object && JSON.stringify(value) === "{}") {
+      callback(new Error("该项为必填，不能为空"));
+    } else if (checkEmptyArrayObject(value)) {
+      callback(new Error("该项为必填，有部分值为空！"));
+    } else {
+      callback();
+    }
+  };
+};
+const checkEmptyArrayObject = arr => {
+  if (arr instanceof Array) {
+    let result = false;
+    arr.forEach(item => {
+      if (item instanceof Object) {
+        for (let key in item) {
+          if (
+            item[key] === null ||
+            item[key] === undefined ||
+            item[key] === ""
+          ) {
+            result = true;
+          }
+        }
+      }
+    });
+    return result;
+  } else {
+    return true;
+  }
+};
 export const validateEl = el => {
   let _validateFn;
   switch (el.type) {
@@ -142,6 +176,9 @@ export const validateEl = el => {
     case "media-upload":
     case "image-upload":
       _validateFn = validateUpload();
+      break;
+    case "multi-input":
+      _validateFn = validateArrayObj();
       break;
     default:
       _validateFn = (rule, value, callback) => {

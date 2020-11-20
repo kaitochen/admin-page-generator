@@ -1,10 +1,10 @@
 export default {
-  type: "cascader",
-  name: "级联选择框",
+  type: "cascader-panel",
+  name: "级联面板",
   icon: "cascader",
   config: {
     prop: "",
-    label: "级联选择框",
+    label: "级联面板",
     required: false,
     disabled: false,
     textual: false,

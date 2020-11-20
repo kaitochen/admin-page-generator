@@ -16,60 +16,51 @@
         <el-radio v-model="element.config.disabled" :label="true">是</el-radio>
         <el-radio v-model="element.config.disabled" :label="false">否</el-radio>
       </el-form-item>
-      <el-form-item label="是否可搜索">
-        <el-radio v-model="element.config.filterable" :label="true"
-          >是</el-radio
+      <el-form-item label="配置属性">
+        <div
+          class="_options"
+          v-for="(option, index) in element.config.options"
+          :key="index"
         >
-        <el-radio v-model="element.config.filterable" :label="false"
-          >否</el-radio
-        >
-      </el-form-item>
-      <el-form-item label="是否多选">
-        <el-radio v-model="element.config.multiple" :label="true">是</el-radio>
-        <el-radio v-model="element.config.multiple" :label="false">否</el-radio>
-      </el-form-item>
-      <el-form-item label="是否显示完整路径">
-        <el-radio v-model="element.config.showAllLevels" :label="true"
-          >是</el-radio
-        >
-        <el-radio v-model="element.config.showAllLevels" :label="false"
-          >否</el-radio
-        >
-      </el-form-item>
-      <el-form-item label="是否任选一级">
-        <el-radio v-model="element.config.checkStrictly" :label="true"
-          >是</el-radio
-        >
-        <el-radio v-model="element.config.checkStrictly" :label="false"
-          >否</el-radio
-        >
-      </el-form-item>
-      <el-form-item label="级联层数">
-        <el-input-number
-          class="flex-full"
-          v-model="element.config.level"
-          :min="1"
-          :max="5"
-        ></el-input-number>
-      </el-form-item>
-      <el-form-item label="动态配置属性">
-        <el-input
-          class="_dynamic-option"
-          v-model="element.config.dynamicUrl"
-          placeholder="请输入请求地址"
-        >
-        </el-input>
+          <el-input v-model="option.key"></el-input>
+          <el-input v-model="option.label"></el-input>
+          <span
+            class="_options-add"
+            v-show="index === element.config.options.length - 1"
+            @click="addOptions"
+            >+</span
+          >
+          <span
+            class="_options-delete"
+            v-show="
+              element.config.options.length > 1 &&
+                index <= element.config.options.length - 1
+            "
+            @click="deleteOptions(index)"
+            >-</span
+          >
+        </div>
       </el-form-item>
     </div>
   </el-form>
 </template>
 <script>
 export default {
-  name: "cascader-config",
+  name: "select-config",
   props: {
     element: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    addOptions() {
+      let options = [...this.element.config.options];
+      options.push({ key: "value" + new Date().getTime(), label: "label" });
+      this.element.config.options = options;
+    },
+    deleteOptions(index) {
+      this.element.config.options.splice(index, 1);
     }
   }
 };

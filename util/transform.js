@@ -32,6 +32,29 @@ export const formToData = (config, _form) => {
     }
   });
 };
+// export const objectToJsonStr = obj => {
+//   let str = "";
+//   for (let k in obj) {
+//     str += `{"${key}":"${obj[k]}"}`;
+//   }
+// };
+export const dataToJson = data => {
+  let _data = {};
+  if (data instanceof Object) {
+    for (let key in data) {
+      let value = data[key];
+      let _value;
+      try {
+        _value = JSON.parse(value);
+      } catch (e) {
+        _value = value;
+      }
+      console.log(value, _value);
+      _data[key] = _value;
+    }
+  }
+  return _data;
+};
 
 export const tableToData = (config, _form) => {
   let _obj = {};

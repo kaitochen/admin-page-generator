@@ -53,26 +53,26 @@ const getGenerateComponents = () => {
   });
   return modules;
 };
+
+const ignoreComponents = ["button", "table-text", "table-operation"];
+const getFormComponents = () => {
+  const path = require("path");
+  const files = require.context("../package", true, /\.js$/);
+  const modules = [];
+  files.keys().forEach(key => {
+    const dirname = path.dirname(key);
+    const dirnames = dirname.replace("./", "").split("/");
+    if (dirnames.length === 2 && dirnames[0] !== "layout") {
+      if (ignoreComponents.indexOf(dirnames[1]) < 0) {
+        modules.push(dirnames[1]);
+      }
+    }
+  });
+  console.log(modules);
+  return modules;
+};
 export const configs = getConfig();
 export const configComponents = getComponent();
 export const dragComponents = getDragComponents();
 export const generateComponents = getGenerateComponents();
-export const FORM_COMPONENT = [
-  "input",
-  "number",
-  "select",
-  "cascader",
-  "checkbox",
-  "color-picker",
-  "date-picker",
-  "data-time-picker",
-  "time-picker",
-  "file-upload",
-  "image-upload",
-  "image-upload",
-  "media-upload",
-  "radio",
-  "rate",
-  "switch",
-  "textarea"
-];
+export const FORM_COMPONENT = getFormComponents();

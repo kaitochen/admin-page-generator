@@ -200,59 +200,18 @@ export class GenerateNavigate {
 
 export class GeneratorUpload {
   constructor(options) {
-    const {
-      ali = () => {
-        return Promise.resolve();
-      },
-      tx = () => () => {
-        return Promise.resolve();
-      },
-      qiniu = () => () => {
-        return Promise.resolve();
-      },
-      server = () => () => {
-        return Promise.resolve();
-      }
-    } = options;
-    this._aliUpload = file => {
-      return ali(file);
+    const upload = options;
+    this._upload = file => {
+      return Promise.resolve(file);
     };
-    this._txUpload = file => {
-      return tx(file);
-    };
-    this._qiniuUpload = file => {
-      return qiniu(file);
-    };
-    this._serverUpload = file => {
-      return server(file);
-    };
-  }
-  setUploadFn(type, cb) {
-    switch (type) {
-      case "ali":
-        this._aliUpload = cb;
-        break;
-      case "tx":
-        this._txUpload = cb;
-        break;
-      case "qiniu":
-        this._qiniuUpload = cb;
-        break;
-      case "server":
-        this._serverUpload = cb;
-        break;
+    if (upload instanceof Function) {
+      this.setUpload(upload);
     }
   }
-  aliUpload(file) {
-    return this._aliUpload(file);
+  setUpload(cb) {
+    this._upload = cb;
   }
-  txUpload(file) {
-    return this._txUpload(file);
-  }
-  qiniuUpload(file) {
-    return this._qiniuUpload(file);
-  }
-  serverUpload(file) {
-    return this._serverUpload(file);
+  upload(file) {
+    return this._upload(file);
   }
 }

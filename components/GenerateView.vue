@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     getRule(el) {
-      const vali = el.config.required
+      const valid = el.config.required
         ? {
             validator: validateEl(el),
             trigger: "change",
@@ -96,7 +96,7 @@ export default {
         : {
             required: false
           };
-      return vali;
+      return valid;
     },
     search() {
       this.$emit("search");

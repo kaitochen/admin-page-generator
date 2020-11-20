@@ -46,6 +46,28 @@
             </li>
           </draggable>
         </div>
+        <div class="pg-component-list">
+          <p class="pg-list-title">业务组件</p>
+          <draggable
+            tag="ul"
+            :list="businessComponents"
+            v-bind="{
+              group: { name: 'designer', pull: 'clone', put: false },
+              sort: false,
+              ghostClass: 'ghost'
+            }"
+            @end="handleMoveEnd"
+            @start="handleMoveStart"
+            :move="handleMove"
+          >
+            <li v-for="(item, index) in businessComponents" :key="index">
+              <a>
+                <i class="icon" :class="item.icon"></i>
+                <span>{{ item.name }}</span>
+              </a>
+            </li>
+          </draggable>
+        </div>
       </aside>
       <section class="pg-center-container">
         <div class="pg-center-tool">
@@ -163,6 +185,7 @@ export default {
     return {
       basicComponents: Object.values(configs.basic),
       layoutComponents: Object.values(configs.layout),
+      businessComponents: Object.values(configs.business),
       dragData: {
         columns: []
       },

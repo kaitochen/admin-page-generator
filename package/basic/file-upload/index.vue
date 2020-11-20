@@ -122,7 +122,7 @@ export default {
     _uploadFile(files, cb) {
       let _upload = [];
       for (let i = 0; i < files.length; i++) {
-        _upload.push(this.$upload.aliUpload(files[i]));
+        _upload.push(this.$upload.upload(files[i]));
       }
       Promise.all(_upload)
         .then(res => {

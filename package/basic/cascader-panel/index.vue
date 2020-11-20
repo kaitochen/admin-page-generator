@@ -1,5 +1,5 @@
 <template>
-  <el-cascader
+  <el-cascader-panel
     class="flex-full"
     v-model="value"
     :placeholder="element.config.placeholder"
@@ -10,14 +10,14 @@
     :options="options"
     clearable
   >
-  </el-cascader>
+  </el-cascader-panel>
 </template>
 <script>
 import { executeProtocol } from "../../../util/converter";
 import comp from "../../../mixins/comp";
 import multiSelector from "../../../mixins/multiSelector";
 export default {
-  name: "pg-cascader",
+  name: "pg-cascader-panel",
   mixins: [comp, multiSelector],
   props: {},
   data() {
