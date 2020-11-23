@@ -469,7 +469,7 @@ ul {
   }
   .pg-config-aside {
     width: 300px;
-    height: 100%;
+    height: 100vh;
     padding: 12px;
     background-color: #ffffff;
     box-sizing: border-box;

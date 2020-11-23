@@ -137,20 +137,28 @@ export default {
     },
     setImage(data, prop) {
       const value = data[prop];
-      if (value) {
-        const img = value.split(",");
-        return img[0];
+      if (Array.isArray(value)) {
+        return value[0];
       } else {
-        return "";
+        if (value) {
+          const img = value.split(",");
+          return img[0];
+        } else {
+          return "";
+        }
       }
     },
     setImageList(data, prop) {
       const value = data[prop];
-      if (value) {
-        const img = value.split(",");
-        return img;
+      if (Array.isArray(value)) {
+        return value;
       } else {
-        return [];
+        if (value) {
+          const img = value.split(",");
+          return img;
+        } else {
+          return [];
+        }
       }
     }
   }

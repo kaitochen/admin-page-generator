@@ -49,7 +49,6 @@ export const dataToJson = data => {
       } catch (e) {
         _value = value;
       }
-      console.log(value, _value);
       _data[key] = _value;
     }
   }
