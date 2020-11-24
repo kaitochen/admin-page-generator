@@ -15,7 +15,6 @@ export const protocolConverter = url => {
   if (url.startsWith("request://")) {
     url = url.replace("request://", "curl ");
     const code = curlToParams(url);
-    console.log(url, code);
     let params = code;
     if (params.body) {
       params.body = decodeUnicode(params.body);
