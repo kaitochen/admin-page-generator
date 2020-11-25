@@ -25,7 +25,9 @@
       </template>
       <el-table-column label="操作" v-if="!element.config.disabled">
         <template v-slot="scope">
-          <el-button type="danger" plain @click="deleteRow(scope)">删行</el-button>
+          <el-button type="danger" plain @click="deleteRow(scope)"
+            >删行</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
