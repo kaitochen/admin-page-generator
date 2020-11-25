@@ -14,6 +14,7 @@ export default {
     btnType: "text",
     isCircle: false,
     plain: false,
-    valid: false
+    valid: false,
+    selection: false
   }
 };

@@ -68,7 +68,6 @@ const getFormComponents = () => {
       }
     }
   });
-  console.log(modules);
   return modules;
 };
 export const configs = getConfig();

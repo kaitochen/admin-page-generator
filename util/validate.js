@@ -178,6 +178,7 @@ export const validateEl = el => {
       _validateFn = validateUpload();
       break;
     case "multi-input":
+    case "form-table":
       _validateFn = validateArrayObj();
       break;
     default:

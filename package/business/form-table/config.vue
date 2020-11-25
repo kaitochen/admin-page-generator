@@ -5,25 +5,23 @@
       <el-form-item label="字段标识">
         <el-input v-model="element.config.prop"></el-input>
       </el-form-item>
-      <el-form-item label="是否可以多选">
-        <el-radio-group v-model="element.config.selection">
+      <el-form-item label="字段名称">
+        <el-input type="text" v-model="element.config.label" size="small" />
+      </el-form-item>
+      <el-form-item label="是否必填">
+        <el-radio v-model="element.config.required" :label="true">是</el-radio>
+        <el-radio v-model="element.config.required" :label="false">否</el-radio>
+      </el-form-item>
+      <el-form-item label="是否禁用">
+        <el-radio v-model="element.config.disabled" :label="true">是</el-radio>
+        <el-radio v-model="element.config.disabled" :label="false">否</el-radio>
+      </el-form-item>
+      <el-form-item label="是否显示表格头">
+        <el-radio-group v-model="element.config.showHeader">
           <el-radio :label="true">是</el-radio>
           <el-radio :label="false">否</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="是否显示分页器">
-        <el-radio-group v-model="element.config.pagination">
-          <el-radio :label="true">是</el-radio>
-          <el-radio :label="false">否</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="是否树级展示">
-        <el-radio-group v-model="element.config.isTree">
-          <el-radio :label="true">是</el-radio>
-          <el-radio :label="false">否</el-radio>
-        </el-radio-group>
-      </el-form-item>
-
       <el-form-item label="表格高度(不填则不限制)">
         <el-input v-model="element.config.height"></el-input>
       </el-form-item>
@@ -32,7 +30,7 @@
 </template>
 <script>
 export default {
-  name: "table-config",
+  name: "form-table-config",
   props: {
     element: {
       type: Object,

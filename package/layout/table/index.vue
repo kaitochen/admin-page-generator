@@ -5,6 +5,11 @@
       :data="dataList"
       border
       @selection-change="selectionChange"
+      row-id="id"
+      :tree-props="{
+        children: element.config.isTree ? 'children' : '',
+        hasChildren: element.config.isTree ? 'hasChildren' : ''
+      }"
     >
       <el-table-column
         type="selection"
@@ -93,7 +98,7 @@ export default {
       required: true
     }
   },
-  inject: ["getData", "pageIndex", "pageSize", "pageTotal"],
+  inject: ["getData", "pageIndex", "pageSize", "pageTotal", "setPageContext"],
   computed: {
     _pageIndex() {
       return this.pageIndex();
@@ -111,7 +116,8 @@ export default {
   data() {
     return {
       generateData: this.data,
-      context: "table"
+      context: "table",
+      selectionData: []
     };
   },
   watch: {
@@ -127,7 +133,11 @@ export default {
   },
   methods: {
     selectionChange(val) {
-      console.log(val);
+      this.selectionData = val;
+      this.setPageContext({
+        tableSelection: this.selectionData,
+        ids: this.selectionData.map(item => item.id)
+      });
     },
     changePage(val) {
       this.getData(val);

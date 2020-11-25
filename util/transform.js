@@ -20,7 +20,7 @@ export const formToData = (config, _form) => {
       formToData(comp.columns, _form["search"]);
     } else if (comp.type === "table") {
       _form["table"] = [];
-      tableToData(comp.columns, _form["table"]);
+      // tableToData(comp.columns, _form["table"]);
     } else if (FORM_COMPONENT.indexOf(comp.type) > -1) {
       let _prop = comp.config.prop;
       let value = comp.config.defaultValue;

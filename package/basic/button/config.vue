@@ -31,6 +31,12 @@
           <el-radio :label="false">否</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="是否为批量操作">
+        <el-radio-group v-model="element.config.selection">
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="按钮类型">
         <el-radio-group v-model="element.config.btnType">
           <el-radio label="text">文字按钮</el-radio>

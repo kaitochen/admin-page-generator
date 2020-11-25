@@ -8,6 +8,7 @@ export default {
     prop: "",
     selection: false,
     height: 500,
-    pagination: true
+    pagination: true,
+    isTree: false
   }
 };

@@ -42,6 +42,7 @@
                 :is="'pgd-' + element.type"
                 :read-only="true"
                 :element="element"
+                :selectForm.sync="selectWidget"
               ></component>
             </el-form-item>
           </template>
@@ -131,6 +132,9 @@ export default {
               prop: this.dragData.columns[newIndex].config.prop || key
             }
           ),
+          columns: this.cloneWidget(
+            this.deepClone(this.dragData.columns[newIndex].columns)
+          ),
           key
         });
       }
@@ -180,6 +184,9 @@ export default {
             {
               prop: this.dragData.columns[newIndex].config.prop || key
             }
+          ),
+          columns: this.cloneWidget(
+            this.deepClone(this.dragData.columns[newIndex].columns)
           ),
           key
         });

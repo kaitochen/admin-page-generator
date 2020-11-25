@@ -7,6 +7,7 @@
     :plain="element.config.plain"
     :style="btnStyle"
     @click="clickBtn"
+    v-show="checkCondition() && checkRole()"
     >{{ element.config.label }}</el-button
   >
 </template>
@@ -49,6 +50,17 @@ export default {
       default: () => {
         return false;
       }
+    },
+    pageContext: {
+      default: () => {
+        return {};
+      }
+    },
+    routeContext: {
+      default: () => {}
+    },
+    globalRole: {
+      default: () => {}
     }
   },
   data() {
@@ -125,17 +137,30 @@ export default {
       }
     },
     dealProtocol(url) {
+      if (this.element.config.selection) {
+        const _pageContext = this.pageContext();
+        if (!_pageContext.ids) {
+          this.$message.error("需要选中后才能执行该操作！");
+          return;
+        }
+      }
       try {
         let source;
         if (this.scope && this.scope.row) {
-          source = [this.scope.row, this.data];
+          source = [
+            this.scope.row,
+            this.data,
+            this.pageContext(),
+            this.routeContext()
+          ];
         } else {
-          source = this.data;
+          source = [this.data, this.pageContext(), this.routeContext()];
         }
         const { type, data } = protocolConverter(
           protocolMatchData(url, source, this.context)
         );
-        // console.log(type, data);
+
+        console.log(this.context);
         if (type === "action") {
           // console.log("action");
           const { action = "" } = data;
@@ -170,6 +195,43 @@ export default {
         }
       } catch (e) {
         console.log(e);
+      }
+    },
+    checkCondition() {
+      if (this.element.config.condition) {
+        const condition = this.element.config.condition;
+        try {
+          let source;
+          if (this.scope && this.scope.row) {
+            source = [
+              this.scope.row,
+              this.data,
+              this.pageContext(),
+              this.routeContext()
+            ];
+          } else {
+            source = [this.data, this.pageContext(), this.routeContext()];
+          }
+          const result = protocolMatchData(condition, source, this.context);
+          return new Function(`return ${result}`)();
+        } catch (e) {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
+    checkRole() {
+      const role = this.element.config.role;
+      if (role) {
+        const roles = this.globalRole();
+        if (roles[role]) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
       }
     }
   }
