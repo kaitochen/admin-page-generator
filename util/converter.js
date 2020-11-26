@@ -1,8 +1,24 @@
 import curlToParams from "curl-to-params";
-function decodeUnicode(str) {
-  str = str.replace(/\\u/g, "%u");
-  return decodeURI(str);
-}
+// function decodeUnicode(str) {
+//   str = str.replace(/\\u/g, "%u");
+//   return decodeURI(str);
+// }
+const encodeChar = str => {
+  let res = encodeURIComponent(str);
+  // res = res.replace(/&/g, "%FFE");
+  res = res.replace(/'/g, "%FFF");
+  return res;
+};
+const decodeChar = str => {
+  let res = str.replace(/%FFF/g, "'");
+  let result = "";
+  // try {
+  //   result = decodeURIComponent(res);
+  // } catch (e) {
+  result = res;
+  // }
+  return result;
+};
 export const protocolConverter = url => {
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return {
@@ -17,25 +33,25 @@ export const protocolConverter = url => {
     const code = curlToParams(url);
     let params = code;
     if (params.body) {
-      params.body = decodeUnicode(params.body);
+      params.body = decodeChar(params.body);
       // if (params.method !== "get" && params.method !== "GET") {
       // let formData = new FormData();
-      let _data = {};
-      let _params = params.body.split("&&");
-      for (let i = 0; i < _params.length; i++) {
-        const key = _params[i].split("=")[0];
-        const value = _params[i].split("=")[1];
-        if (value === "" || value === undefined || value === null) {
-          continue;
-        }
-        try {
-          _data[key] = JSON.parse(value);
-        } catch (e) {
-          _data[key] = `${value.replace(/\\'/g, "'")}`;
-        }
-        // formData.append(key, value);
-      }
-      params.body = _data;
+      // let _data = {};
+      // let _params = params.body.split("&&");
+      // for (let i = 0; i < _params.length; i++) {
+      //   const key = _params[i].split("=")[0];
+      //   const value = _params[i].split("=")[1];
+      //   if (value === "" || value === undefined || value === null) {
+      //     continue;
+      //   }
+      //   try {
+      //     _data[key] = JSON.parse(value);
+      //   } catch (e) {
+      //     _data[key] = `${value}`;
+      //   }
+      //   // formData.append(key, value);
+      // }
+      // params.body = _data;
       // } else {
 
       // let data = {};
@@ -131,10 +147,10 @@ export const protocolMatchData = (url, data, context) => {
                   try {
                     _val =
                       typeof value[k] === "string"
-                        ? value[k].replace(/'/g, "\\'")
+                        ? encodeChar(value[k])
                         : value[k] instanceof Object
-                        ? JSON.stringify(value[k])
-                        : value[k];
+                        ? encodeChar(JSON.stringify(value[k]))
+                        : encodeChar(value[k]);
                   } catch (e) {
                     _val = value[k];
                   }
@@ -152,10 +168,10 @@ export const protocolMatchData = (url, data, context) => {
                 try {
                   _val =
                     typeof value === "string"
-                      ? value.replace(/'/g, "\\'")
+                      ? encodeChar(value)
                       : value instanceof Object
-                      ? JSON.stringify(value)
-                      : value;
+                      ? encodeChar(JSON.stringify(value))
+                      : encodeChar(value);
                 } catch (e) {
                   _val = value;
                 }
@@ -171,10 +187,10 @@ export const protocolMatchData = (url, data, context) => {
                   try {
                     _val =
                       typeof value[k] === "string"
-                        ? value[k].replace(/'/g, "\\'")
+                        ? encodeChar(value[k])
                         : value[k] instanceof Object
-                        ? JSON.stringify(value[k])
-                        : value[k];
+                        ? encodeChar(JSON.stringify(value[k]))
+                        : encodeChar(value[k]);
                   } catch (e) {
                     _val = value[k];
                   }
@@ -192,10 +208,10 @@ export const protocolMatchData = (url, data, context) => {
                 try {
                   _val =
                     typeof value === "string"
-                      ? value.replace(/'/g, "\\'")
+                      ? encodeChar(value)
                       : value instanceof Object
-                      ? JSON.stringify(value)
-                      : value;
+                      ? encodeChar(JSON.stringify(value))
+                      : encodeChar(value);
                 } catch (e) {
                   _val = value;
                 }
@@ -239,10 +255,10 @@ export const protocolMatchData = (url, data, context) => {
                 try {
                   _val =
                     typeof value[k] === "string"
-                      ? value[k].replace(/'/g, "\\'")
+                      ? encodeChar(value[k])
                       : value[k] instanceof Object
-                      ? JSON.stringify(value[k])
-                      : value[k];
+                      ? encodeChar(JSON.stringify(value[k]))
+                      : encodeChar(value[k]);
                 } catch (e) {
                   _val = value[k];
                 }
@@ -260,10 +276,10 @@ export const protocolMatchData = (url, data, context) => {
               try {
                 _val =
                   typeof value === "string"
-                    ? value.replace(/'/g, "\\'")
+                    ? encodeChar(value)
                     : value instanceof Object
-                    ? JSON.stringify(value)
-                    : value;
+                    ? encodeChar(JSON.stringify(value))
+                    : encodeChar(value);
               } catch (e) {
                 _val = value;
               }
@@ -279,10 +295,10 @@ export const protocolMatchData = (url, data, context) => {
                 try {
                   _val =
                     typeof value[k] === "string"
-                      ? value[k].replace(/'/g, "\\'")
+                      ? encodeChar(value[k])
                       : value[k] instanceof Object
-                      ? JSON.stringify(value[k])
-                      : value[k];
+                      ? encodeChar(JSON.stringify(value[k]))
+                      : encodeChar(value[k]);
                 } catch (e) {
                   _val = value[k];
                 }
@@ -301,10 +317,10 @@ export const protocolMatchData = (url, data, context) => {
                 console.log(value, typeof value === "string");
                 _val =
                   typeof value === "string"
-                    ? value.replace(/'/g, "\\'")
+                    ? encodeChar(value)
                     : value instanceof Object
-                    ? JSON.stringify(value)
-                    : value;
+                    ? encodeChar(JSON.stringify(value))
+                    : encodeChar(value);
               } catch (e) {
                 _val = value;
               }
