@@ -114,7 +114,7 @@ export const protocolConverter = url => {
 };
 export const protocolMatchData = (url, data, context) => {
   url = url.replace(/"/g, "'");
-  const reg = /\{[a-zA-z.]*\}/g;
+  const reg = /#\{[a-zA-z.]*\}/g;
   let matchResult = url.match(reg);
   if (matchResult && matchResult.length > 0) {
     if (data instanceof Array) {
@@ -128,7 +128,7 @@ export const protocolMatchData = (url, data, context) => {
         const _data = context && _item[context] ? _item[context] : _item;
         matchResult.forEach(item => {
           try {
-            const params = item.replace("{", "").replace("}", "");
+            const params = item.replace("#{", "").replace("}", "");
             let key = params.split(".");
             let value = "";
             if (key.length > 1) {
