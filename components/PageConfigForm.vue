@@ -3,7 +3,7 @@
     <div class="_config-pg-form-item">
       <p class="_config-pg-title">页面配置</p>
       <el-form-item label="上下文配置">
-        <el-input type="text" v-model="element.context" size="small">
+        <el-input type="textarea" v-model="element.context" size="small">
         </el-input>
       </el-form-item>
     </div>

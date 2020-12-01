@@ -50,6 +50,7 @@
         v-if="element.config.dynamic || element.config.remote"
       >
         <el-input
+          type="textarea"
           class="_dynamic-option"
           v-model="element.config.dynamicUrl"
           placeholder="请输入请求地址"

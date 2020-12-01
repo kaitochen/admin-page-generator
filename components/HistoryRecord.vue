@@ -2,14 +2,15 @@
   <div class="history">
     <ul>
       <template v-for="(item, index) in historyList">
-        <li :key="index">
+        <li :key="index" @click.stop="checkHistory(item)">
           <p class="title">
-            <span @click.stop="checkHistory(item)">{{ item.name }}</span
-            ><span class="el-icon-error" @click="deleteHistory(item)"></span>
+            <span>{{ item.name }}</span
+            ><span
+              class="el-icon-error"
+              @click.stop="deleteHistory(item)"
+            ></span>
           </p>
-          <p class="text" @click.stop="checkHistory(item)">
-            {{ item.owner }} {{ item.createDate }}
-          </p>
+          <p class="text">{{ item.owner }} {{ item.createDate }}</p>
         </li>
       </template>
     </ul>
@@ -33,7 +34,15 @@ export default {
       this.$emit("check", data);
     },
     deleteHistory(data) {
-      this.$emit("delete", data);
+      this.$confirm("是否确定删除该版本？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$emit("delete", data);
+        })
+        .catch(() => {});
     }
   }
 };
@@ -53,6 +62,7 @@ export default {
       border-bottom: 1px solid #e5e5e5;
       padding: 5px 10px;
       box-sizing: border-box;
+      cursor: pointer;
       .title {
         display: flex;
         flex-direction: row;

@@ -40,7 +40,11 @@
               </el-image>
             </template>
             <template v-if="col.config.type === 'action'">
-              <el-link type="primary">{{ scope.row[col.config.prop] }}</el-link>
+              <el-link
+                type="primary"
+                @click="clickBtn(scope, col.config.url)"
+                >{{ scope.row[col.config.prop] }}</el-link
+              >
             </template>
           </template>
         </el-table-column>
@@ -83,6 +87,11 @@
 </template>
 <script>
 import GenerateView from "../../../components/GenerateView";
+import {
+  protocolConverter,
+  protocolMatchData,
+  executeProtocol
+} from "../../../util/converter.js";
 export default {
   name: "pg-table",
   components: {
@@ -98,7 +107,15 @@ export default {
       required: true
     }
   },
-  inject: ["getData", "pageIndex", "pageSize", "pageTotal", "setPageContext"],
+  inject: [
+    "getData",
+    "pageIndex",
+    "pageSize",
+    "pageTotal",
+    "setPageContext",
+    "pageContext",
+    "routeContext"
+  ],
   computed: {
     _pageIndex() {
       return this.pageIndex();
@@ -117,7 +134,8 @@ export default {
     return {
       generateData: this.data,
       context: "table",
-      selectionData: []
+      selectionData: [],
+      scope: {}
     };
   },
   watch: {
@@ -169,6 +187,66 @@ export default {
         } else {
           return [];
         }
+      }
+    },
+    clickBtn(scope, url) {
+      if (!url) {
+        // this.$message.error("该按钮无点击触发，请设置！");
+        return;
+      }
+      this.dealProtocol(scope,url);
+    },
+    dealProtocol(scope,url) {
+      try {
+        let source;
+        if (scope && scope.row) {
+          source = [
+            this.scope.row,
+            this.data,
+            this.pageContext(),
+            this.routeContext()
+          ];
+        } else {
+          source = [this.data, this.pageContext(), this.routeContext()];
+        }
+        const { type, data } = protocolConverter(
+          protocolMatchData(url, source, "")
+        );
+
+        if (type === "action") {
+          // console.log("action");
+          const { action = "" } = data;
+          switch (action) {
+            case "back":
+              this.$router.go(-1);
+              break;
+            // case "clear":
+            //   if (this.context && this.generateData[this.context]) {
+            //     const _data = this.generateData[this.context];
+            //     for (let k in _data) {
+            //       _data[k] = "";
+            //     }
+            //     this.generateData[this.context] = _data;
+            //   } else {
+            //     const _data = this.generateData;
+            //     for (let k in _data) {
+            //       _data[k] = "";
+            //     }
+            //     this.generateData = _data;
+            //   }
+            //   break;
+            default:
+              break;
+          }
+        } else if (type === "request" || type === "http") {
+          executeProtocol.call(this, { type, data });
+        } else if (type === "route") {
+          executeProtocol.call(this, { type, data });
+        } else {
+          console.log("other");
+        }
+      } catch (e) {
+        console.log(e);
       }
     }
   }

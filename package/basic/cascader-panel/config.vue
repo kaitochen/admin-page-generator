@@ -54,6 +54,7 @@
       </el-form-item>
       <el-form-item label="动态配置属性">
         <el-input
+          type="textarea"
           class="_dynamic-option"
           v-model="element.config.dynamicUrl"
           placeholder="请输入请求地址"

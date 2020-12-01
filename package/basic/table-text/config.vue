@@ -41,6 +41,7 @@
         <el-input
           size="small"
           style="width: 100%"
+          type="textarea"
           v-model="element.config.url"
         ></el-input>
       </el-form-item>

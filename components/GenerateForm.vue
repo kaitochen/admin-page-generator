@@ -117,6 +117,7 @@
       size="90%"
       direction="ttb"
       :append-to-body="true"
+      class="_preview"
     >
       <div v-if="drawer">
         <generate-view
@@ -278,6 +279,9 @@ export default {
     getHistory() {
       this.$emit("getHistory", data => {
         this.historyList = data;
+        if (data.length > 0) {
+          this.checkHistory(data[0]);
+        }
       });
     }
   },
@@ -506,6 +510,11 @@ ul {
   }
   .flex-full {
     width: 100% !important;
+  }
+}
+._preview {
+  .el-drawer__open .el-drawer.ttb {
+    overflow-y: auto;
   }
 }
 </style>

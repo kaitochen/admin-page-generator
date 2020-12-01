@@ -15,12 +15,12 @@
           v-model="element.config.width"
         ></el-input>
       </el-form-item>
-      <el-form-item label="是否固定在右侧">
+      <!-- <el-form-item label="是否固定在右侧">
         <el-radio-group v-model="element.config.fixRight">
           <el-radio :label="true">是</el-radio>
           <el-radio :label="false">否</el-radio>
         </el-radio-group>
-      </el-form-item>
+      </el-form-item> -->
     </div>
   </el-form>
 </template>

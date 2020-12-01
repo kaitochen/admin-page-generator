@@ -57,6 +57,7 @@
       </el-form-item>
       <el-form-item label="点击链接">
         <el-input
+          type="textarea"
           size="small"
           style="width: 100%"
           v-model="element.config.url"
