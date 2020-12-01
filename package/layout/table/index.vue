@@ -194,9 +194,9 @@ export default {
         // this.$message.error("该按钮无点击触发，请设置！");
         return;
       }
-      this.dealProtocol(scope,url);
+      this.dealProtocol(scope, url);
     },
-    dealProtocol(scope,url) {
+    dealProtocol(scope, url) {
       try {
         let source;
         if (scope && scope.row) {

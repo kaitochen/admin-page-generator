@@ -97,7 +97,9 @@
             </template>
           </el-tab-pane>
           <el-tab-pane label="页面配置" name="page">
-            <page-config-form :element="pageConfig"></page-config-form>
+            <page-config-form
+              :element.sync="pageConfig.context"
+            ></page-config-form>
           </el-tab-pane>
           <el-tab-pane label="历史版本" name="history">
             <history-record
@@ -194,7 +196,7 @@ export default {
       drawer: false,
       activeName: "comp",
       pageConfig: {
-        context: ""
+        context: []
       },
       generateData: {},
       historyList: [],

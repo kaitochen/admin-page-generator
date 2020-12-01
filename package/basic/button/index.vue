@@ -160,7 +160,7 @@ export default {
           protocolMatchData(url, source, this.context)
         );
 
-        console.log(this.context);
+        console.log(type, data);
         if (type === "action") {
           // console.log("action");
           const { action = "" } = data;
