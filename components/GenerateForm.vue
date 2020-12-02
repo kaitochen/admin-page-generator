@@ -76,8 +76,10 @@
           <el-button type="primary" @click="importConfig">导入配置</el-button>
           <el-button type="primary" @click="clear">清空</el-button>
           <el-button type="primary" @click="quit">退出</el-button>
+          <el-button type="primary" @click="showJson">代码/布局切换</el-button>
         </div>
         <el-form
+          v-show="!showJsonState"
           ref="form"
           label-width="120px"
           label-position="left"
@@ -88,6 +90,14 @@
             :dragData="dragData"
           ></drag-view>
         </el-form>
+        <editor
+          style="height: calc(100vh - 50px);"
+          v-show="showJsonState"
+          v-model="json"
+          @init="initEditor"
+          theme="chrome"
+          lang="json"
+        ></editor>
       </section>
       <aside class="pg-config-aside">
         <el-tabs v-model="activeName">
@@ -168,6 +178,7 @@ import { configs } from "./componentsConfig.js";
 import { validateConfigLength } from "../util/validate.js";
 import { configToData } from "../util/transform.js";
 import { importWidget } from "../util/init.js";
+const editor = require("vue2-ace-editor");
 export default {
   name: "generate-form",
   components: {
@@ -176,7 +187,8 @@ export default {
     DragView,
     GenerateView,
     PageConfigForm,
-    HistoryRecord
+    HistoryRecord,
+    editor
   },
   props: {
     id: {
@@ -203,8 +215,21 @@ export default {
       dialogVisible: false,
       form: {
         name: ""
-      }
+      },
+      showJsonState: false,
+      json: ""
     };
+  },
+  watch: {
+    dragData: {
+      deep: true,
+      handler(val) {
+        this.json = JSON.stringify(val, null, 2);
+      }
+    },
+    json(val) {
+      this.dragData = JSON.parse(val);
+    }
   },
   methods: {
     handleMoveEnd() {},
@@ -284,6 +309,30 @@ export default {
         if (data.length > 0) {
           this.checkHistory(data[0]);
         }
+      });
+    },
+    showJson() {
+      this.showJsonState = !this.showJsonState;
+    },
+    initEditor(editor) {
+      require("brace/ext/language_tools");
+      require("brace/mode/json");
+      require("brace/theme/chrome");
+      require("brace/snippets/json");
+      // editor.gotoLine(1);
+      //   //启动换行
+      editor.getSession().setUseWrapMode(true);
+      editor.setOptions({
+        readOnly: false,
+        autoScrollEditorIntoView: true,
+        displayIndentGuides: false,
+        fixedWidthGutter: true,
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true,
+        tabSize: 2,
+        fontSize: 12,
+        showPrintMargin: false
       });
     }
   },
