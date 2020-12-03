@@ -90,18 +90,11 @@
             :dragData="dragData"
           ></drag-view>
         </el-form>
-        <editor
-          style="height: calc(100vh - 50px);"
-          v-show="showJsonState"
-          v-model="json"
-          @init="initEditor"
-          theme="chrome"
-          lang="json"
-        ></editor>
+        <json-editor :data.sync="json" :visible="showJsonState"></json-editor>
       </section>
       <aside class="pg-config-aside">
         <el-tabs v-model="activeName">
-          <el-tab-pane label="组件配置" name="comp">
+          <el-tab-pane label="组件配置" name="comp" v-show="!showJsonState">
             <template v-if="isEmptyObject(selectForm) && selectForm.type">
               <generate-config-form :select="selectForm"></generate-config-form>
             </template>
@@ -173,12 +166,13 @@ import DragView from "./DragView";
 import GenerateView from "./GenerateView";
 import PageConfigForm from "./PageConfigForm";
 import HistoryRecord from "./HistoryRecord";
+import JsonEditor from "./JsonEditor";
 import { configs } from "./componentsConfig.js";
 // import { formConfig } from "../mock/index.js";
 import { validateConfigLength } from "../util/validate.js";
 import { configToData } from "../util/transform.js";
 import { importWidget } from "../util/init.js";
-const editor = require("vue2-ace-editor");
+
 export default {
   name: "generate-form",
   components: {
@@ -188,7 +182,7 @@ export default {
     GenerateView,
     PageConfigForm,
     HistoryRecord,
-    editor
+    JsonEditor
   },
   props: {
     id: {
@@ -221,12 +215,6 @@ export default {
     };
   },
   watch: {
-    dragData: {
-      deep: true,
-      handler(val) {
-        this.json = JSON.stringify(val, null, 2);
-      }
-    },
     json(val) {
       this.dragData = JSON.parse(val);
     }
@@ -312,28 +300,10 @@ export default {
       });
     },
     showJson() {
+      if (!this.showJsonState) {
+        this.json = JSON.stringify(this.dragData, null, 2);
+      }
       this.showJsonState = !this.showJsonState;
-    },
-    initEditor(editor) {
-      require("brace/ext/language_tools");
-      require("brace/mode/json");
-      require("brace/theme/chrome");
-      require("brace/snippets/json");
-      // editor.gotoLine(1);
-      //   //启动换行
-      editor.getSession().setUseWrapMode(true);
-      editor.setOptions({
-        readOnly: false,
-        autoScrollEditorIntoView: true,
-        displayIndentGuides: false,
-        fixedWidthGutter: true,
-        enableBasicAutocompletion: true,
-        enableSnippets: true,
-        enableLiveAutocompletion: true,
-        tabSize: 2,
-        fontSize: 12,
-        showPrintMargin: false
-      });
     }
   },
   mounted() {
