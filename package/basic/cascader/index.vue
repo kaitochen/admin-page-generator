@@ -98,16 +98,27 @@ export default {
                 console.log("cascade", res);
                 const level = _this.element.config.level;
                 if (level <= 1) {
-                  this.options = res.data.map(item => ({
-                    value: item.key,
-                    label: item.value,
-                    leaf: true
-                  }));
+                  this.options = res.data.map(item => {
+                    const option = {
+                      value: item.key,
+                      label: item.value,
+                    };
+                    if (item.children) {
+                      option.children = item.children;
+                    }
+                    return option;
+                  });
                 } else {
-                  this.options = res.data.map(item => ({
-                    value: item.key,
-                    label: item.value
-                  }));
+                  this.options = res.data.map(item => {
+                    const option = {
+                      value: item.key,
+                      label: item.value
+                    };
+                    if (item.children) {
+                      option.children = item.children;
+                    }
+                    return option;
+                  });
                 }
               } else {
                 this.options = [];
