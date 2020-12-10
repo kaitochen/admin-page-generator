@@ -87,6 +87,7 @@ export default {
   },
   mounted() {
     const _this = this;
+    console.log(_this.element.config.dynamicUrl);
     try {
       _this.curlCommand(_this.element.config.dynamicUrl, params => {
         if (params.type === "request" || params.type === "http") {
