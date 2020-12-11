@@ -83,6 +83,20 @@ export default {
       } else {
         return "/" + node.value;
       }
+    },
+    setOption(arr) {
+      return arr.map(item => {
+        const option = {
+          value: item.key,
+          label: item.value
+        };
+        if (item.children && item.children.length > 0) {
+          option.children = this.setOption(item.children);
+        } else {
+          option.leaf = true;
+        }
+        return option;
+      });
     }
   },
   mounted() {
@@ -98,27 +112,9 @@ export default {
                 console.log("cascade", res);
                 const level = _this.element.config.level;
                 if (level <= 1) {
-                  this.options = res.data.map(item => {
-                    const option = {
-                      value: item.key,
-                      label: item.value,
-                    };
-                    if (item.children) {
-                      option.children = item.children;
-                    }
-                    return option;
-                  });
+                  this.options = this.setOption(res.data);
                 } else {
-                  this.options = res.data.map(item => {
-                    const option = {
-                      value: item.key,
-                      label: item.value
-                    };
-                    if (item.children) {
-                      option.children = item.children;
-                    }
-                    return option;
-                  });
+                  this.options = this.setOption(res.data);
                 }
               } else {
                 this.options = [];
