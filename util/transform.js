@@ -44,9 +44,13 @@ export const dataToJson = data => {
     for (let key in data) {
       let value = data[key];
       let _value;
-      try {
-        _value = JSON.parse(value);
-      } catch (e) {
+      if (typeof value !== "object") {
+        try {
+          _value = JSON.parse(value);
+        } catch (e) {
+          _value = value;
+        }
+      } else {
         _value = value;
       }
       _data[key] = _value;
