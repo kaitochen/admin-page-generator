@@ -329,6 +329,7 @@ ul {
   }
   .pg-aside {
     width: 300px;
+    flex-shrink: 0;
     background-color: #ffffff;
     overflow: auto;
     .pg-component-list {
@@ -370,6 +371,7 @@ ul {
   .pg-center-container {
     flex: 1;
     height: 100vh;
+    width: calc(100vw - 600px);
     background-color: #f2f2f2;
     // overflow: auto;
     position: relative;
@@ -499,6 +501,7 @@ ul {
     background-color: #ffffff;
     box-sizing: border-box;
     overflow: auto;
+    flex-shrink: 0;
     $--color-primary: #3377ff;
     ._config-pg-form {
       width: 100%;
