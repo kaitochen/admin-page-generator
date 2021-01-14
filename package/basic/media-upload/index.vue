@@ -15,6 +15,7 @@
           <div class="file-item drag-media" :key="index">
             <p :title="file.name">{{ file.name }}</p>
             <span
+              v-if="!(isReadOnly || element.config.disabled)"
               class="close el-icon-error"
               @click="deleteAlready(index)"
             ></span>
@@ -22,7 +23,11 @@
         </template>
       </transition-group>
     </draggable>
-    <div class="file-upload" v-show="value.length < element.config.limit">
+    <div
+      class="file-upload"
+      v-if="!(isReadOnly || element.config.disabled)"
+      v-show="value.length < element.config.limit"
+    >
       <el-button
         type="primary"
         size="mini"

@@ -21,6 +21,7 @@
                 :preview-src-list="[file]"
               ></el-image>
               <span
+                v-if="!(isReadOnly || element.config.disabled)"
                 class="close el-icon-error"
                 @click="deleteAlready(index)"
               ></span>
@@ -31,7 +32,7 @@
       <div
         class="upload-item"
         @click="chooseImage"
-        v-if="!isReadOnly || !element.config.disabled"
+        v-if="!(isReadOnly || element.config.disabled)"
         v-show="value.length < element.config.limit"
       >
         <i class="el-icon-plus"></i>
