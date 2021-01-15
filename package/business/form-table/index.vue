@@ -16,9 +16,13 @@
             </template>
             <template v-else>
               <el-input
+                v-if="col.config.type == 'text'"
                 v-model="scope.row[col.config.prop]"
                 placeholder=""
               ></el-input>
+              <p v-else-if="col.config.type == 'video'">
+                {{ scope.row[col.config.prop] }}
+              </p>
             </template>
           </template>
         </el-table-column>
@@ -41,7 +45,8 @@ import comp from "../../../mixins/comp";
 export default {
   name: "pg-form-table",
   mixins: [comp],
-  components: {},
+  components: {
+  },
   props: {},
   computed: {
     rowItem() {

@@ -13,6 +13,7 @@ export default {
     placeholder: "",
     defaultValue: 0,
     step: 1,
-    precision: 0
+    precision: 0,
+    condition: ""
   }
 };

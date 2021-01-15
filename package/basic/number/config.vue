@@ -24,7 +24,9 @@
           size="small"
         ></el-input-number>
       </el-form-item>
-
+      <el-form-item label="判断条件">
+        <el-input type="text" v-model="element.config.condition" size="small" />
+      </el-form-item>
       <el-form-item label="是否必填">
         <el-radio v-model="element.config.required" :label="true">是</el-radio>
         <el-radio v-model="element.config.required" :label="false">否</el-radio>
