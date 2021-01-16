@@ -11,7 +11,7 @@
       <el-form-item label="判断条件">
         <el-input type="text" v-model="element.config.condition" size="small" />
       </el-form-item>
-       <el-form-item label="数据地址">
+      <el-form-item label="数据地址">
         <el-input type="text" v-model="element.config.url" size="small" />
       </el-form-item>
     </div>

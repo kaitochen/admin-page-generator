@@ -201,7 +201,7 @@ export default {
         let source;
         if (scope && scope.row) {
           source = [
-            this.scope.row,
+            scope.row,
             this.data,
             this.pageContext(),
             this.routeContext()

@@ -14,6 +14,7 @@ import {
 
 import "./theme/default.scss";
 
+import tinymce from "tinymce";
 import VueTinymce from "./lib/tinymce/index";
 
 const components = [GenerateForm]
@@ -33,6 +34,7 @@ const install = function(Vue, options) {
   Vue.prototype.generateKey = generateKey;
   Vue.prototype.navigator = new GenerateNavigate(options.navigator);
   Vue.prototype.$upload = new GeneratorUpload(options.upload);
+  Vue.prototype.$custom = options.custom;
   components.forEach(component => {
     Vue.component(component.name, component);
   });
