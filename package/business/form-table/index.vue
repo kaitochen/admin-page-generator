@@ -12,7 +12,9 @@
         >
           <template v-slot="scope">
             <template v-if="element.config.disabled">
-              <p>{{ scope.row[col.config.prop] }}</p>
+              <p @click="clickColumn(scope, col)">
+                {{ scope.row[col.config.prop] }}
+              </p>
             </template>
             <template v-else>
               <el-input
@@ -22,8 +24,15 @@
               ></el-input>
               <div v-else-if="col.config.type == 'video'">
                 <p class="pg-form-table-video">
-                  {{ scope.row[col.config.prop] }}
-                  <span class="pg-form-table-video-close el-icon-error" @click="deleteVideo(scope, col.config.prop)"></span>
+                  <span
+                    class="pg-form-table-video-text"
+                    @click="clickColumn(scope, col)"
+                    >{{ scope.row[col.config.prop] }}</span
+                  >
+                  <span
+                    class="pg-form-table-video-close el-icon-error"
+                    @click="deleteVideo($event, scope, col.config.prop)"
+                  ></span>
                 </p>
                 <el-button
                   v-show="!scope.row[col.config.prop]"
@@ -55,6 +64,11 @@
 </template>
 <script>
 import comp from "../../../mixins/comp";
+import {
+  protocolConverter,
+  protocolMatchData,
+  executeProtocol
+} from "../../../util/converter.js";
 export default {
   name: "pg-form-table",
   mixins: [comp],
@@ -92,9 +106,31 @@ export default {
       this.checkedData["__prop"] = prop;
       this.$refs.file.click();
     },
-    deleteVideo(scope,prop){
+    deleteVideo(e, scope, prop) {
+      // e.stopPropagation();
+      // e.preventDefault();
+      console.log(e, scope);
       const index = scope.$index;
       this.value[index][prop] = "";
+    },
+    clickColumn(scope, col) {
+      if (col.config.type == "video") {
+        // const value = scope.row[col.config.prop];
+        // console.log(value, col.config.url);
+        try {
+          let source = [scope.row];
+          const { type, data } = protocolConverter(
+            protocolMatchData(col.config.url, source, "")
+          );
+          if (type === "request" || type === "http") {
+            executeProtocol.call(this, { type, data });
+          } else {
+            console.log("other");
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
     }
   },
   mounted() {
@@ -118,7 +154,7 @@ export default {
           console.log(res);
           const index = this.checkedData.$index;
           const prop = this.checkedData.__prop;
-          this.value[index][prop] = res.uploaderid;
+          this.value[index][prop] = res.fileData.vid;
         })
         .catch(err => {
           console.log(err);
@@ -165,6 +201,11 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
+    }
+    .pg-form-table-video-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .pg-form-table-video-close {
       position: absolute;
