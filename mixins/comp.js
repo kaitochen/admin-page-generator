@@ -52,17 +52,29 @@ export default {
     value: {
       deep: true,
       handler(val) {
+        let _val = val;
+        if (val == undefined) {
+          if (this.element.type === "number") {
+            _val = this.element.config.min;
+          } else {
+            _val = this.element.config.defaultValue;
+          }
+        }
+
+        // if(val == undefined){
+        //   val = this.element.config.defaultValue
+        // }
         const _prop = this.element.config.prop;
         let _data = {};
         if (this.context) {
           _data = {
             ...this.data,
-            [this.context]: { ...this.data[this.context], [_prop]: val }
+            [this.context]: { ...this.data[this.context], [_prop]: _val }
           };
         } else {
           _data = {
             ...this.data,
-            [_prop]: val
+            [_prop]: _val
           };
         }
         this.$emit("update:data", _data);
