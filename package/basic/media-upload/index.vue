@@ -13,7 +13,7 @@
       <transition-group name="fade" tag="div" class="file-list">
         <template v-for="(file, index) in value">
           <div class="file-item drag-media" :key="index">
-            <p :title="file.name">{{ file.name }}</p>
+            <p :title="file">{{ file }}</p>
             <span
               v-if="!(isReadOnly || element.config.disabled)"
               class="close el-icon-error"
@@ -121,7 +121,21 @@ export default {
       this.value.splice(index, 1);
     },
     _uploadFile(files, cb) {
-      cb(files);
+      let _upload = [];
+      for (let i = 0; i < files.length; i++) {
+        _upload.push(this.$upload.upload(files[i]));
+      }
+      Promise.all(_upload)
+        .then(res => {
+          cb(
+            res.map(item => {
+              return item.url;
+            })
+          );
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   mounted() {

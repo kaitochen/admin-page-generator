@@ -40,12 +40,16 @@ export default {
             resolve(valid);
           });
         });
+      },
+      clear: () => {
+        return this.clear();
       }
     };
   },
   data() {
     return {
-      generateData: this.data
+      generateData: this.data,
+      copyDataStr: ""
     };
   },
   watch: {
@@ -63,7 +67,13 @@ export default {
   methods: {
     forgive() {
       this.$emit("forgive");
+    },
+    clear() {
+      this.generateData = JSON.parse(this.copyDataStr);
     }
+  },
+  mounted() {
+    this.copyDataStr = JSON.stringify(this.data);
   }
 };
 </script>

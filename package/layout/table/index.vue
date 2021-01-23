@@ -138,6 +138,9 @@ export default {
       scope: {}
     };
   },
+  mounted() {
+    console.log(this.element);
+  },
   watch: {
     data(val) {
       this.generateData = val;

@@ -61,6 +61,9 @@ export default {
     },
     globalRole: {
       default: () => {}
+    },
+    clear: {
+      default: () => {}
     }
   },
   data() {
@@ -170,17 +173,19 @@ export default {
               break;
             case "clear":
               if (this.context && this.generateData[this.context]) {
-                const _data = this.generateData[this.context];
-                for (let k in _data) {
-                  _data[k] = "";
-                }
-                this.generateData[this.context] = _data;
+                this.clear();
+                // const _data = this.generateData[this.context];
+                // for (let k in _data) {
+                //   _data[k] = "";
+                // }
+                // this.generateData[this.context] = _data;
               } else {
-                const _data = this.generateData;
-                for (let k in _data) {
-                  _data[k] = "";
-                }
-                this.generateData = _data;
+                // const _data = this.generateData;
+                // for (let k in _data) {
+                //   _data[k] = "";
+                // }
+                // this.generateData = _data;
+                this.clear();
               }
               break;
             default:
@@ -197,6 +202,7 @@ export default {
         console.log(e);
       }
     },
+
     checkCondition() {
       if (this.element.config.condition) {
         const condition = this.element.config.condition;
