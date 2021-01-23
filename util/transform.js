@@ -46,7 +46,11 @@ export const dataToJson = data => {
       let _value;
       if (typeof value !== "object") {
         try {
-          _value = JSON.parse(value);
+          if (isNaN(+value)) {
+            _value = JSON.parse(value);
+          }else{
+            _value = value;
+          }
         } catch (e) {
           _value = value;
         }
