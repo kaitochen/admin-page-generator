@@ -29,6 +29,7 @@ export default {
     prop: "",
     label: "穿梭框",
     condition: "",
+    required: false,
     defaultValue: [],
     url: ""
   }
