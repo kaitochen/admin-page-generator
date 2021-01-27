@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     search() {
-      this.getData();
+      this.getData(1);
     },
     clear() {
       const search = this.generateData[this.context];

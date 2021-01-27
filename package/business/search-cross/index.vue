@@ -250,6 +250,9 @@ export default {
       this.targetIsIndeterminate =
         value.length > 0 && value.length < this.value.length;
     }
+  },
+  mounted(){
+    this._search();
   }
 };
 </script>
