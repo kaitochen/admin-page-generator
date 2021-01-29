@@ -10,6 +10,7 @@ export default {
     disabled: false,
     defaultValue: [],
     height: 500,
-    showHeader: true
+    showHeader: true,
+    multiUpload: false
   }
 };

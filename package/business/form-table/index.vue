@@ -1,5 +1,11 @@
 <template>
   <div class="pg-form-table-container">
+    <div
+      style="width:100%"
+      v-if="!element.config.disabled && element.config.multiUpload"
+    >
+      <el-button type="primary" @click="multiUpload">批量上传</el-button>
+    </div>
     <el-table class="pg-form-table" :data="value" border>
       <template v-for="col in element.columns">
         <el-table-column
@@ -59,7 +65,14 @@
     <div style="flex:1" v-if="!element.config.disabled">
       <el-button type="primary" @click="addRow">增行</el-button>
     </div>
-    <input type="file" ref="file" accept=".mp3,.mp4,.ogg" class="file" />
+
+    <input
+      type="file"
+      ref="file"
+      :multiple="multi"
+      accept=".mp3,.mp4,.ogg"
+      class="file"
+    />
   </div>
 </template>
 <script>
@@ -81,11 +94,21 @@ export default {
         obj[item.config.prop] = "";
       });
       return obj;
+    },
+    uploadProp() {
+      let prop = "";
+      this.element.columns.forEach(item => {
+        if (item.config.type === "video") {
+          prop = item.config.prop;
+        }
+      });
+      return prop;
     }
   },
   data() {
     return {
-      checkedData: {}
+      checkedData: {},
+      multi: false
     };
   },
   watch: {},
@@ -104,7 +127,20 @@ export default {
     checkUpload(data, prop) {
       this.checkedData = data;
       this.checkedData["__prop"] = prop;
-      this.$refs.file.click();
+      this.multi = false;
+      this.$nextTick(() => {
+        this.$refs.file.click();
+      });
+    },
+    multiUpload() {
+      this.multi = true;
+      if (this.value.length > 0) {
+        this.$nextTick(() => {
+          this.$refs.file.click();
+        });
+      } else {
+        this.$message.warning("没有数据列，无法上传");
+      }
     },
     deleteVideo(e, scope, prop) {
       // e.stopPropagation();
@@ -135,30 +171,49 @@ export default {
   },
   mounted() {
     this.$refs.file.addEventListener("change", e => {
-      let files = e.target.files[0];
-      // if (files) {
-      //   let { res, error } = filterMedia(files, 50);
-      //   if (error.length > 0) {
-      //     this.$message.error(
-      //       "以下文件不符合文件格式或者超出了最大文件大小(" +
-      //         50 +
-      //         "MB)，已被忽略：" +
-      //         error.join(";\n")
-      //     );
-      //   }
-      // if (res.length > 0) {
-      // const limit = 1;
-      this.$custom
-        .upload(files)
-        .then(res => {
-          console.log(res);
-          const index = this.checkedData.$index;
-          const prop = this.checkedData.__prop;
-          this.value[index][prop] = res.fileData.vid;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      if (this.multi) {
+        let files = e.target.files;
+        const _file = new Array(this.value.length).fill(undefined);
+        for (let i = 0; i < files.length; i++) {
+          const name = files[i].name;
+          const res = name.match(/^\d-/);
+          if (res != null) {
+            const index = res[0].slice(0, -1) - 1;
+            if (index < _file.length) {
+              _file[index] = files[i];
+            }
+          }
+        }
+        if (this.uploadProp) {
+          _file.forEach((file, index) => {
+            if (file) {
+              this.$custom
+                .upload(file)
+                .then(res => {
+                  const prop = this.uploadProp;
+                  console.log(index, prop);
+                  this.value[index][prop] = res.fileData.vid;
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            }
+          });
+        }
+      } else {
+        let files = e.target.files[0];
+        this.$custom
+          .upload(files)
+          .then(res => {
+            console.log(res);
+            const index = this.checkedData.$index;
+            const prop = this.checkedData.__prop;
+            this.value[index][prop] = res.fileData.vid;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
 
       // } else {
       // this.$message.error(
@@ -183,6 +238,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    flex-wrap: wrap;
     .pg-form-table {
       flex: none;
       width: auto;

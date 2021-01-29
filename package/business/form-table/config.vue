@@ -22,6 +22,12 @@
           <el-radio :label="false">否</el-radio>
         </el-radio-group>
       </el-form-item>
+       <el-form-item label="是否支持批量上传">
+        <el-radio-group v-model="element.config.multiUpload">
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="表格高度(不填则不限制)">
         <el-input v-model="element.config.height"></el-input>
       </el-form-item>
