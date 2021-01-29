@@ -17,9 +17,7 @@ export default {
       required: true
     }
   },
-  methods: {
-    
-  }
+  methods: {}
 };
 </script>
 <style lang="scss">

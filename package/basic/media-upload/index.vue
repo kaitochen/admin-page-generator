@@ -13,7 +13,7 @@
       <transition-group name="fade" tag="div" class="file-list">
         <template v-for="(file, index) in value">
           <div class="file-item drag-media" :key="index">
-            <p :title="file">{{ file }}</p>
+            <p :title="file" @click="open(file)">{{ file }}</p>
             <span
               v-if="!(isReadOnly || element.config.disabled)"
               class="close el-icon-error"
@@ -136,47 +136,56 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    open(file) {
+      console.log(file);
+      window.open(file, "_target");
     }
   },
   mounted() {
-    this.$refs.file.addEventListener("change", e => {
-      let files = e.target.files;
-      if (files) {
-        let { res, error } = filterMedia(files, this.element.config.sizeLimit);
-        if (error.length > 0) {
-          this.$message.error(
-            "以下文件不符合文件格式或者超出了最大文件大小(" +
-              this.element.config.sizeLimit +
-              "MB)，已被忽略：" +
-              error.join(";\n")
+    if (this.$refs.file) {
+      this.$refs.file.addEventListener("change", e => {
+        let files = e.target.files;
+        if (files) {
+          let { res, error } = filterMedia(
+            files,
+            this.element.config.sizeLimit
           );
-        }
-        if (res.length > 0) {
-          const limit = this.element.config.limit;
-          let len = this.value.length;
-          let readyLen = this.readyFile.length;
-          let resLen = res.length;
-          if (len + resLen + readyLen <= limit) {
-            this.readyFile = this.readyFile.concat([...res]);
-            if (!this.element.config.multiple) {
-              this._uploadFile(this.readyFile, files => {
-                this.value = this.value.concat(files);
-                this.readyFile = [];
-                this.dialogVisible = false;
-              });
-            }
-          } else {
+          if (error.length > 0) {
             this.$message.error(
-              "文件上传数量限制为" +
-                limit +
-                "，还可上传数量为" +
-                (limit - len - readyLen)
+              "以下文件不符合文件格式或者超出了最大文件大小(" +
+                this.element.config.sizeLimit +
+                "MB)，已被忽略：" +
+                error.join(";\n")
             );
           }
+          if (res.length > 0) {
+            const limit = this.element.config.limit;
+            let len = this.value.length;
+            let readyLen = this.readyFile.length;
+            let resLen = res.length;
+            if (len + resLen + readyLen <= limit) {
+              this.readyFile = this.readyFile.concat([...res]);
+              if (!this.element.config.multiple) {
+                this._uploadFile(this.readyFile, files => {
+                  this.value = this.value.concat(files);
+                  this.readyFile = [];
+                  this.dialogVisible = false;
+                });
+              }
+            } else {
+              this.$message.error(
+                "文件上传数量限制为" +
+                  limit +
+                  "，还可上传数量为" +
+                  (limit - len - readyLen)
+              );
+            }
+          }
         }
-      }
-      e.target.value = "";
-    });
+        e.target.value = "";
+      });
+    }
   }
 };
 </script>
@@ -228,6 +237,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
   }
 }
 .close {

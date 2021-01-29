@@ -48,7 +48,7 @@ export const dataToJson = data => {
         try {
           if (isNaN(+value)) {
             _value = JSON.parse(value);
-          }else{
+          } else {
             _value = value;
           }
         } catch (e) {

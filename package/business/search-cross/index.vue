@@ -251,7 +251,7 @@ export default {
         value.length > 0 && value.length < this.value.length;
     }
   },
-  mounted(){
+  mounted() {
     this._search();
   }
 };

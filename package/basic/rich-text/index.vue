@@ -1,5 +1,9 @@
 <template>
-  <vue-tinymce v-model="value" :setting="setting" :disabled="isReadOnly||element.config.disabled" />
+  <vue-tinymce
+    v-model="value"
+    :setting="setting"
+    :disabled="isReadOnly || element.config.disabled"
+  />
 </template>
 <script>
 import comp from "../../../mixins/comp";

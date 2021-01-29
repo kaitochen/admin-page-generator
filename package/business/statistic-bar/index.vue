@@ -1,10 +1,10 @@
 <template>
   <ul class="pg-statistic-bar">
-    <li class="pg-statistic-item" v-for="(item,index) in value" :key="index">
+    <li class="pg-statistic-item" v-for="(item, index) in value" :key="index">
       <img class="pg-statistic-icon" :src="item.icon" />
       <div class="pg-statistic-message">
-        <span>{{item.label}}</span>
-        <p>{{item.num}}</p>
+        <span>{{ item.label }}</span>
+        <p>{{ item.num }}</p>
       </div>
     </li>
   </ul>
@@ -16,18 +16,11 @@ export default {
   mixins: [comp],
   props: {},
   data() {
-    return {
-    };
+    return {};
   },
-  watch: {
-   
-  },
-  methods: {
-   
-  },
+  watch: {},
+  methods: {},
   mounted() {}
 };
 </script>
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
