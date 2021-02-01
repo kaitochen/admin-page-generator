@@ -37,6 +37,7 @@
       >
         <i class="el-icon-plus"></i>
       </div>
+      <p class="image-placeholder">{{element.config.placeholder}}</p>
     </div>
 
     <input
@@ -185,6 +186,7 @@ export default {
   // width: 100%;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 .file-list {
   margin: 0;
@@ -236,5 +238,14 @@ export default {
   font-size: 16px;
   color: #999999;
   cursor: pointer;
+}
+.image-placeholder{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  color: #ff4e56;
+  font-size: 12px;
+  margin-left: 20px;
+  flex-shrink: 0;
 }
 </style>

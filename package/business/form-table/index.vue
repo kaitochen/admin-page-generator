@@ -189,12 +189,16 @@ export default {
             protocolMatchData(col.config.url, {}, "")
           );
           if (type === "request") {
-            executeProtocol.call(this, { type, data, cb: (res)=>{
-              console.log(res);
-              if(res.code === 200){
-                this.options[col.config.prop] = res.data;
+            executeProtocol.call(this, {
+              type,
+              data,
+              cb: res => {
+                console.log(res);
+                if (res.code === 200) {
+                  this.options[col.config.prop] = res.data;
+                }
               }
-            }});
+            });
           } else {
             console.log("other");
           }
