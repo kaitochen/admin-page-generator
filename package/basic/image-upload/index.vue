@@ -211,6 +211,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 .file-input {
   width: 0;

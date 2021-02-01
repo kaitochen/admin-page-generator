@@ -13,7 +13,8 @@ export default {
       { value: "text", label: "文本" },
       { value: "image", label: "图片" },
       { value: "action", label: "操作" },
-      { value: "video", label: "视频" }
+      { value: "video", label: "视频" },
+      { value: "select", label: "下拉框" }
     ],
     url: "/getAction/{id}"
   }

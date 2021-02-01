@@ -47,6 +47,19 @@
                   >上传</el-button
                 >
               </div>
+              <el-select
+                v-else-if="col.config.type == 'select'"
+                v-model="scope.row[col.config.prop]"
+                placeholder=""
+              >
+                <el-option
+                  v-for="item in options[col.config.prop]"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
             </template>
           </template>
         </el-table-column>
@@ -108,7 +121,8 @@ export default {
   data() {
     return {
       checkedData: {},
-      multi: false
+      multi: false,
+      options: {}
     };
   },
   watch: {},
@@ -167,9 +181,29 @@ export default {
           console.log(e);
         }
       }
+    },
+    getColumnsOptions() {
+      this.element.columns.forEach(col => {
+        if (col.config.type === "select") {
+          const { type, data } = protocolConverter(
+            protocolMatchData(col.config.url, {}, "")
+          );
+          if (type === "request") {
+            executeProtocol.call(this, { type, data, cb: (res)=>{
+              console.log(res);
+              if(res.code === 200){
+                this.options[col.config.prop] = res.data;
+              }
+            }});
+          } else {
+            console.log("other");
+          }
+        }
+      });
     }
   },
   mounted() {
+    this.getColumnsOptions();
     this.$refs.file.addEventListener("change", e => {
       if (this.multi) {
         let files = e.target.files;
