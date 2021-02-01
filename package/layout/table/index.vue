@@ -5,7 +5,7 @@
       :data="dataList"
       border
       @selection-change="selectionChange"
-      row-id="id"
+      row-key="id"
       :tree-props="{
         children: element.config.isTree ? 'children' : '',
         hasChildren: element.config.isTree ? 'hasChildren' : ''
